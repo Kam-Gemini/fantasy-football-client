@@ -1,42 +1,111 @@
-#root {
-  max-width: 1280px;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Oswald:wght@200..700&display=swap');
+
+:root {
+  --text-primary: #f4d35e;
+  --text-secondary: #cecece;
+  --background-primary: #023e7d;
+  --background-secondary: #001427;
+  --background-tertiary: #001427;
+  --border: #7A9BA6;
+  --brand: #007200;
+  --brand-hover: #004b23;
+  --brand-disabled: #007200;
+  --error: #E74C3C;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background-secondary);
+}
+
+main {
+  margin: 0;
+  background-color: var(--background-secondary);
+  flex-grow: 1;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+nav {
+  background-color: var(--background-secondary);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+div {
+  background-color: var(--background-secondary);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  font-family: "Bebas Neue", sans-serif;
+  color: var(--text-primary)
 }
 
-.card {
-  padding: 2em;
+html {
+  background-color: var(--background-secondary);
 }
 
-.read-the-docs {
-  color: #888;
+.site-name {
+  color: white;
+}
+
+.tagline {
+  color: white;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  background-color: var(--brand);
+  border: none;
+  margin: 0.3rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: var(--brand-hover);
+}
+
+.button:disabled {
+  background-color: var(--brand-disabled);
+  cursor: not-allowed;
+}
+
+.tagline {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 22px;
+}
+
+.sitename {
+
+  background-image: url(./components/NavMenu/stickypopcorn.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 70px;
+  width: 600px;
+
 }

@@ -1,0 +1,40 @@
+.teams {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 30px;
+}
+
+.crestContainer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;
+    text-align: center;
+    margin: 0 20px;
+    align-items: start;
+}
+
+.crestContainer button {
+    background: none;
+    border: --border;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.crestContainer img {
+    width: 150px;
+    /* Adjust the size as needed */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.crestContainer button:hover img {
+    transform: scale(1.1);
+}
+
+.heading {
+    color: #f4d35e;
+}

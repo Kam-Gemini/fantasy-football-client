@@ -1,0 +1,120 @@
+.container {
+  padding-left: 35rem;
+  padding-right: 35rem;
+  color: var(--text-secondary);
+  font-size: .9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px, 100px, 0px, 100px;
+  margin-top: 50px;
+}
+
+.container h1 {
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  justify-items: center;
+  text-align: center;
+  font-size: 3rem;
+}
+
+.container p {
+  text-align: center;
+}
+
+.container div {
+  margin-bottom: 1rem;
+  background-color: var(--background-primary);
+  border: none;
+}
+
+.container div label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: .5rem;
+  color: white;
+
+}
+
+.container div input {
+  display: block;
+  width: 100%;
+  height: 35px;
+  border: 2px solid transparent;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: var(--background-tertiary);
+  color: var(--text-primary);
+}
+
+.container div input:hover {
+  border-color: var(--border);
+}
+
+.container div input::placeholder {
+  color: var(--text-secondary);
+}
+
+.container form button {
+  display: block;
+  width: 97%;
+  margin-left: 10px;
+  padding: .5rem 1rem;
+  color: var(--text-primary);
+  border-radius: 8px;
+  border: none;
+  height: 35px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.container form button:disabled {
+  background-color: var(--brand-disabled);
+}
+
+.container form button:hover:not(:disabled) {
+  background-color: var(--brand-hover);
+  cursor: pointer;
+}
+
+.formcontrol {
+  margin: 0px, 100px, 0px, 100px;
+
+}
+
+.image {
+  background-image: url(./soccer.gif);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 10rem;
+}
+
+.button {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  background-color: var(--brand);
+  border: none;
+  margin: 0.5rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  width: 97%;
+  margin-left: 10px;
+}
+
+.button:hover {
+  background-color: var(--brand-hover);
+}
+
+.button:disabled {
+  background-color: var(--brand-disabled);
+  cursor: not-allowed;
+}
