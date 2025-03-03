@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import { signin } from '../../services/userService'
 import { setToken } from '../../utils/auth'
 import { getUserFromToken } from '../../utils/auth'
-// import { Button } from 'react-bootstrap'
 import { UserContext } from '../../contexts/UserContext'
 
 // Styles
@@ -13,7 +12,6 @@ export default function Signin() {
     // Context
     // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
     const { user, setUser } = useContext(UserContext)
-    console.log(user)
 
     // State
     const [formData, setFormData] = useState({
@@ -38,8 +36,8 @@ export default function Signin() {
             setUser(getUserFromToken())
             handleNavigate()
         } catch (error) {
-            //   setErrors(error.response.data.errors)
             setErrors(error.response.data)
+            console.log('Error Object Detail', error.response.data.detail)
         }
     }
 
@@ -65,7 +63,6 @@ export default function Signin() {
                         required
                         onChange={handleChange}
                     />
-                    {errors.username && <p className='error-message'>{errors.username}</p>}
                 </div>
 
                 {/* Password */}
@@ -79,13 +76,9 @@ export default function Signin() {
                         required
                         onChange={handleChange}
                     />
-                    {errors.password && <p className='error-message'>{errors.password}</p>}
+                    {errors.detail && <p className='error-block'>{errors.detail}</p>}
+
                 </div>
-
-
-                {/* <button disabled={formData.password === ''  */}
-                {/* //</form>|| formData.password !== formData.confirmPassword
-            // } type="submit" className='button'>Submit</button> */}
 
                 <button
                     disabled={!formData.password}

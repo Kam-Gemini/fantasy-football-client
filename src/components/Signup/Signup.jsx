@@ -10,11 +10,9 @@ import '../../App.css'
 
 // Styles
 import styles from './Signup.module.css'
-//import styled from 'styled-components'
 
 export default function Signup() {
     // Context
-    // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
     const { user, setUser } = useContext(UserContext)
     console.log(user)
 
@@ -34,14 +32,11 @@ export default function Signup() {
         navigate('/favouriteteam')
     }
 
-    //console.log(formData)
-    // Events
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             await signup(formData)
             const data = await signin({username: formData.username, password: formData.password})
-            console.log(data)
             setToken(data.token)
             // Set the global user context/state
             setUser(getUserFromToken())

@@ -21,6 +21,6 @@ export const signin = async (formData) => {
         return res.data
     } catch (error) {
         console.log(error)
-        throw new error
+        throw error
     }
 }
