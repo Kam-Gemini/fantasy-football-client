@@ -6,25 +6,20 @@ import { getUserFromToken } from '../../utils/auth'
 import { UserContext } from '../../contexts/UserContext'
 
 // Styles
-import styles from './Signin.module.css'
+import styles from '../Signin/Signin.module.css'
 
-export default function Signin() {
+export default function FantasyTeamName() {
     // Context
     // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
     const { user, setUser } = useContext(UserContext)
 
     // State
     const [formData, setFormData] = useState({
-        username: '',
-        password: ''
+        team_name: ''
     })
     const [errors, setErrors] = useState({})
 
-    const navigate = useNavigate();
-
-    const handleNavigate = () => {
-        user.favourite_team ? navigate('/fantasyteamname') : navigate('/favouriteteam')
-    }
+    const navigate = useNavigate()
 
     //console.log(formData)
     // Events
@@ -49,46 +44,22 @@ export default function Signin() {
 
     return (
         <section className={styles.container}>
-            <section className={styles.image}></section>
-            <h1>Sign in</h1>
+            <h1>Fantasy Team Name</h1>
             <form onSubmit={handleSubmit}>
                 {/* Username */}
                 <div className="form-control">
-                    <label htmlFor="username">Username</label>
                     <input
                         type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter your username"
+                        name="team_name"
+                        id="team_name"
+                        placeholder="Enter your team name..."
                         required
                         onChange={handleChange}
                     />
                 </div>
 
-                {/* Password */}
-                <div className="form-control">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                        onChange={handleChange}
-                    />
-                    {errors.detail && <p className='error-block'>{errors.detail}</p>}
-
-                </div>
-
-                <button
-                    disabled={!formData.password}
-                    type="submit"
-                    className="button"
-                >
-                    Submit
-                </button>
+                <button onClick={() => navigate('/')} disabled={!formData.team_name} type="submit" className={styles.button}>Submit</button>
             </form>
-            <button onClick={() => navigate('/signup')} className={styles.button}>Don't have an account yet? Sign up here!</button>
         </section>
     )
 }

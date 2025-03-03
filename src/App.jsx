@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router'
 import Signin from './components/Signin/Signin'
 import Signup from './components/Signup/Signup'
 import FavouriteTeam from './components/FavouriteTeam/FavouriteTeam'
-import TeamName from './components/TeamName'
+import TeamName from './components/FantasyTeamName/TeamName'
 
 function App() {
 

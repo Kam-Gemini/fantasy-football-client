@@ -1,71 +1,87 @@
-// Styles
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+import { updateProfile } from '../../services/userService'
+import { useNavigate } from 'react-router'
 import styles from './FavouriteTeam.module.css'
 
-
 export default function FavouriteTeam() {
+    const { user, setUser } = useContext(UserContext)
+    const navigate = useNavigate()
+
+    const handleTeamSelect = async (e) => {
+        const favourite_team = e.currentTarget.value
+        try {
+            const updatedUser = await updateProfile({ favourite_team })
+            setUser(updatedUser)
+            navigate('/fantasyteamname')
+        } catch (error) {
+            console.error('Error updating profile:')
+        }
+    }
+
     return (
         <>
             <section className={styles.teams}>
                 <h1 className={styles.heading}>Select Your Favourite Team!</h1>
                 <div className={styles.crestContainer}>
-                    <button id="Arsenal">
+                    <button value="Arsenal" onClick={handleTeamSelect}>
                         <img src="/assets/Arsenal.png" alt="Arsenal" />
                     </button>
-                    <button id="AstonVilla">
+                    <button value="Aston Villa" onClick={handleTeamSelect}>
                         <img src="/assets/AstonVilla.png" alt="Aston Villa" />
                     </button>
-                    <button id="Bournemouth">
+                    <button value="Bournemouth" onClick={handleTeamSelect}>
                         <img src="/assets/Bournemouth.png" alt="Bournemouth" />
                     </button>
-                    <button id="Brentford">
+                    <button value="Brentford" onClick={handleTeamSelect}>
                         <img src="/assets/Brentford.png" alt="Brentford" />
                     </button>
-                    <button id="Brighton">
+                    <button value="Brighton" onClick={handleTeamSelect}>
                         <img src="/assets/Brighton.png" alt="Brighton & Hove Albion" />
                     </button>
-                    <button id="Chelsea">
+                    <button value="Chelsea" onClick={handleTeamSelect}>
                         <img src="/assets/Chelsea.png" alt="Chelsea" />
                     </button>
-                    <button id="CrystalPalace">
+                    <button value="Crystal Palace" onClick={handleTeamSelect}>
                         <img src="/assets/CrystalPalace.png" alt="Crystal Palace" />
                     </button>
-                    <button id="Everton">
+                    <button value="Everton" onClick={handleTeamSelect}>
                         <img src="/assets/Everton.png" alt="Everton" />
                     </button>
-                    <button id="Forest">
+                    <button value="Nottingham Forest" onClick={handleTeamSelect}>
                         <img src="/assets/Forest.png" alt="Nottingham Forest" />
                     </button>
-                    <button id="Fulham">
+                    <button value="Fulham" onClick={handleTeamSelect}>
                         <img src="/assets/Fulham.png" alt="Fulham" />
                     </button>
-                    <button id="Ipswich">
+                    <button value="Ipswich Town" onClick={handleTeamSelect}>
                         <img src="/assets/Ipswich.png" alt="Ipswich Town" />
                     </button>
-                    <button id="Leicester">
+                    <button value="Leicester" onClick={handleTeamSelect}>
                         <img src="/assets/Leicester.png" alt="Leicester" />
                     </button>
-                    <button id="Liverpool">
+                    <button value="Liverpool" onClick={handleTeamSelect}>
                         <img src="/assets/Liverpool.png" alt="Liverpool" />
                     </button>
-                    <button id="ManCity">
+                    <button value="Man City" onClick={handleTeamSelect}>
                         <img src="/assets/ManCity.png" alt="Man City" />
                     </button>
-                    <button id="ManUtd">
+                    <button value="Man United" onClick={handleTeamSelect}>
                         <img src="/assets/ManUtd.png" alt="Man United" />
                     </button>
-                    <button id="Newcastle">
+                    <button value="Newcastle" onClick={handleTeamSelect}>
                         <img src="/assets/Newcastle.png" alt="Newcastle" />
                     </button>
-                    <button id="Southampton">
+                    <button value="Southampton" onClick={handleTeamSelect}>
                         <img src="/assets/Saints.png" alt="Southampton" />
                     </button>
-                    <button id="Spurs">
+                    <button value="Spurs" onClick={handleTeamSelect}>
                         <img src="/assets/Spurs.png" alt="Spurs" />
                     </button>
-                    <button id="WestHam">
+                    <button value="West Ham" onClick={handleTeamSelect}>
                         <img src="/assets/WestHam.png" alt="West Ham" />
                     </button>
-                    <button id="Wolves">
+                    <button value="Wolves" onClick={handleTeamSelect}>
                         <img src="/assets/Wolves.png" alt="Wolves" />
                     </button>
                 </div>

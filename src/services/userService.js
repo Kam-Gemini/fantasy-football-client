@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getToken } from "../utils/auth.js"
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -22,5 +23,19 @@ export const signin = async (formData) => {
     } catch (error) {
         console.log(error)
         throw error
+    }
+}
+
+export const updateProfile = async (formData) => {
+    try {
+        const res = await axios.put(BASE_URL + '/auth/profile/', formData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        throw error;
     }
 }
