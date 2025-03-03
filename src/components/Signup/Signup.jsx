@@ -1,12 +1,11 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
-import { signup } from '../../services/userService'
+import { signup, signin } from '../../services/userService'
 import { setToken } from '../../utils/auth'
 import { getUserFromToken } from '../../utils/auth'
 
 import { UserContext } from '../../contexts/UserContext'
 
-import { NavHistoryContext } from '../../contexts/NavHistoryContext'
 import '../../App.css'
 
 // Styles
@@ -16,19 +15,19 @@ import styles from './Signup.module.css'
 export default function Signup() {
     // Context
     // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
-    const { setUser } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+    console.log(user)
 
     // State
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        password_confirmation: ''
     })
     const [errors, setErrors] = useState({})
 
     // Location variables
-
-    const { history } = useContext(NavHistoryContext);
     const navigate = useNavigate();
 
     const handleNavigate = () => {
@@ -40,21 +39,19 @@ export default function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const data = await signup(formData)
+            await signup(formData)
+            const data = await signin({username: formData.username, password: formData.password})
+            console.log(data)
             setToken(data.token)
             // Set the global user context/state
             setUser(getUserFromToken())
-            // Navigate to posts page
-            console.log(`HISTORY ${history}`)
             handleNavigate()
-
         } catch (error) {
-            setErrors(error.response.data.errors)
+            setErrors(error.response.data)
         }
     }
 
     const handleChange = (e) => {
-        console.dir(e.target)
         setErrors({ ...errors, [e.target.name]: '' })
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -106,9 +103,24 @@ export default function Signup() {
                     />
                     {errors.password && <p className='error-message'>{errors.password}</p>}
                 </div>
-                <button disabled={formData.password === ''
-                    //</form>|| formData.password !== formData.confirmPassword
-                } type="submit" className='button'>Submit</button>
+
+                {/* Password Confirmation */}
+                <div className="form-control">
+                <label htmlFor="password_confirmation">Confirm password</label>
+                <input 
+                    type="password"
+                    name="password_confirmation" 
+                    id="password_confirmation"
+                    placeholder="Re-type the password"
+                    required
+                    onChange={handleChange}
+                />
+                {(formData.password.length > 0 && formData.password_confirmation > 0 || formData.password !== formData.password_confirmation) &&
+                    <p className='error-block'>Passwords do not match</p>
+                }
+                </div>
+
+                <button disabled={formData.password === '' || formData.password !== formData.password_confirmation} type="submit" className='button'>Submit</button>
             </form>
         </section>
     )

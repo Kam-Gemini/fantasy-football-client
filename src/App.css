@@ -109,3 +109,16 @@ body,
   width: 600px;
 
 }
+
+.error-message {
+  margin: 0.5rem 0;
+  color: var(--error);
+}
+
+.error-block {
+  margin: 1rem 0;
+  background-color: var(--error);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 0.5rem;
+}

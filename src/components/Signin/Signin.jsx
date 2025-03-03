@@ -6,44 +6,26 @@ import { getUserFromToken } from '../../utils/auth'
 // import { Button } from 'react-bootstrap'
 import { UserContext } from '../../contexts/UserContext'
 
-import { NavHistoryContext } from '../../contexts/NavHistoryContext'
-
 // Styles
 import styles from './Signin.module.css'
 
 export default function Signin() {
     // Context
     // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
-    const { setUser } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+    console.log(user)
 
     // State
     const [formData, setFormData] = useState({
         username: '',
-        email: '',
         password: ''
     })
     const [errors, setErrors] = useState({})
 
-    // Location variables
-
-    // const location = useLocation();
-    // const fromPage = location.state?.from || "unknown"
-
-    const { history } = useContext(NavHistoryContext);
     const navigate = useNavigate();
 
     const handleNavigate = () => {
-        console.log("HANDLE NAVIGATE")
-        const targetIndex = history.length - 2
-        if (history[targetIndex] === '/') {
-            console.log('IF')
-            navigate('/')
-            // navigate('/')
-        }
-        else {
-            console.log('ELSE')
-            navigate(-2)
-        }
+        user.favourite_team ? navigate('/fantasyteamname') : navigate('/favouriteteam')
     }
 
     //console.log(formData)
@@ -53,16 +35,11 @@ export default function Signin() {
         try {
             const data = await signin(formData)
             setToken(data.token)
-            // Set the global user context/state
             setUser(getUserFromToken())
-            // Navigate to posts page
-            // navigate(fromPage !== "unknown" ? fromPage : "/")
-            //  navigate(-2)
-            console.log(`HISTORY ${history}`)
             handleNavigate()
         } catch (error) {
             //   setErrors(error.response.data.errors)
-            setErrors(error.message)
+            setErrors(error.response.data)
         }
     }
 
@@ -88,7 +65,7 @@ export default function Signin() {
                         required
                         onChange={handleChange}
                     />
-                    {errors.identifier && <p className='error-message'>{errors.identifier}</p>}
+                    {errors.username && <p className='error-message'>{errors.username}</p>}
                 </div>
 
                 {/* Password */}
@@ -117,7 +94,6 @@ export default function Signin() {
                 >
                     Submit
                 </button>
-
             </form>
             <button onClick={() => navigate('/signup')} className={styles.button}>Don't have an account yet? Sign up here!</button>
         </section>

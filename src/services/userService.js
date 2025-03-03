@@ -6,8 +6,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 export const signup = async (formData) => {
 
 try {
-    const res = await axios.post(BASE_URL + '/signup', formData)
-    console.log(res)
+    const res = await axios.post(BASE_URL + '/auth/register/', formData)
     return res.data
 } catch (error) {
     console.log(error)
@@ -18,9 +17,10 @@ try {
 
 export const signin = async (formData) => {
     try {
-        const res = await axios.post(BASE_URL + '/signin', formData)
+        const res = await axios.post(BASE_URL + '/auth/login/', formData)
         return res.data
     } catch (error) {
+        console.log(error)
         throw new error
     }
 }
