@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = import.meta.env.VITE_API_URL + '/players'
+const BASE_URL = import.meta.env.VITE_API_URL + '/players/'
 
 export const playerIndex = async () => {
   try {

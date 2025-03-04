@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { playerIndex } from '../../services/playerService'
 import PlayerCard from './PlayerCard'
+import VacantPlayer from './VacantPlayer'
 import Filters from './Filters'
 import Spinner from '../Spinner/Spinner'
 
@@ -13,8 +14,13 @@ export default function SelectTeam () {
     const [displayedPlayers, setDisplayedPlayers] = useState([])
     const [filterBy, setFilterBy] = useState('All')
     const [isLoading, setIsLoading] = useState(true)
-    const [searchTerm, setSearchTerm] = useState('')
     const listAllClubs = [...new Set(players.map(player => player.club))]
+    const [teamData, setTeamData] = useState({
+        goalkeeper: null,
+        defenders: [null, null, null, null],
+        midfielders: [null, null, null],
+        forwards: [null, null, null],
+     })
 
     useEffect(() => {
         playerIndex()
@@ -28,11 +34,6 @@ export default function SelectTeam () {
 
     useEffect(() => {
         let results = players
-
-        if (searchTerm) {
-            results = results.filter(player => 
-            player.name.toLowerCase().startsWith(searchTerm.toLowerCase()))
-        }
 
         if (filterBy === 'Goalkeepers') {
             results = results.filter(player => player.position === 'Goalkeeper')
@@ -48,11 +49,7 @@ export default function SelectTeam () {
 
         setDisplayedPlayers(results)
 
-    }, [filterBy, searchTerm, players])
-
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase())
-    }
+    }, [filterBy, players])
 
     return (
         <>
@@ -66,18 +63,28 @@ export default function SelectTeam () {
                 </div>
             </section>
             <section className={styles.mainBody}>
-                <div className={styles.pitch}></div>
-                <div className={styles.playerFiltering}>
-                    <div className={styles.search}>
-                        <input 
-                            type="search" 
-                            name="search" 
-                            id="search" 
-                            placeholder="Search..." 
-                            onChange={handleSearch}
-                            value={searchTerm}
-                        />
+                <div className={styles.pitch}>
+                    <div className={styles.pitchGoalkeeper}>
+                        <VacantPlayer position={"Goalkeeper"} />  
                     </div>
+                    <div className={styles.pitchDefenders}>
+                        <VacantPlayer position={"Defender"} />
+                        <VacantPlayer position={"Defender"} />
+                        <VacantPlayer position={"Defender"} />
+                        <VacantPlayer position={"Defender"} />
+                    </div>
+                    <div className={styles.pitchMidfielders}>
+                        <VacantPlayer position={"Midfielder"} />
+                        <VacantPlayer position={"Midfielder"} />
+                        <VacantPlayer position={"Midfielder"} />
+                    </div>
+                    <div className={styles.pitchForwards}>
+                        <VacantPlayer position={"Forward"} />
+                        <VacantPlayer position={"Forward"} />
+                        <VacantPlayer position={"Forward"} />
+                    </div>
+                </div>
+                <div className={styles.playerFiltering}>
                     <Filters filterBy={filterBy} setFilterBy={setFilterBy} listAllClubs={listAllClubs}/>
                     <div className={styles.playersContainer}>
                     { isLoading ? <Spinner /> : 

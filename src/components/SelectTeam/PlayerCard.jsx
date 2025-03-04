@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 
 const Image_URL = import.meta.env.VITE_API_URL
 
-
 export default function PlayerCard({ player }) {
 
     return (

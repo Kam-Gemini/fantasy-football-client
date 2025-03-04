@@ -37,26 +37,50 @@
     margin: 50px 30px;
 }
 
-/* .pitch {
-    position: relative;
-    width: 600px;
-    height: 600px;
-} */
-
 .pitch {
-    width: 1000px;
-    height: 1000px;
+    width: 1000px; /* Fixed width */
+    height: 1200px; /* Fixed height */
     background-color: var(--brand);
+    position: relative; /* Ensure absolute positioning of child elements works correctly */
 }
 
-.pitch img{
+.pitchGoalkeeper, .pitchDefenders, .pitchMidfielders, .pitchForwards {
     position: absolute;
+    text-align: center;
+    color: white;
+}
+
+.pitchGoalkeeper {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pitchDefenders {
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.pitchMidfielders {
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.pitchForwards {
     top: 80%;
-    left: 55%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transform-origin: center center;
-    width: auto;
-    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
 }
 
 .playersContainer {
@@ -67,6 +91,7 @@
     text-align: center;
     margin: 0 20px;
     align-items: start;
+    width: 100%;
 }
 
 .card {
@@ -78,7 +103,45 @@
     padding: 20px 0px 0px 0px;
     background-color: transparent;
     text-align: center;
-    height: 100%; 
+    height: 100%;
+    width: 120px;
+}
+
+.pitchGoalkeeper {
+    background-color: var(--brand);
+}
+
+.pitchDefenders {
+    background-color: var(--brand);
+}
+
+.pitchMidfielders {
+    background-color: var(--brand);
+}
+
+.pitchForwards {
+    background-color: var(--brand);
+}
+
+.vacantCard {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 0px 0px 0px;
+    background-color: transparent;
+    text-align: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.vacantCard img {
+    width: 100%; 
+    height: auto; 
+    max-height: 100px; 
+    object-fit: contain;  
+    border-radius: 8px 8px 0 0;
+    background-color: var(--brand);
+    margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 .card img {
@@ -89,11 +152,23 @@
     border-radius: 8px 8px 0 0;
     background-color: var(--background-tertiary);
     margin-bottom: 15px;
+    margin-top: -5px;
+}
+
+.vacantPlayerInfo {
+    font-family: "Roboto";
+    color: var(--text-primary);
+    font-size: 0.7rem;
+    line-height: 0.1rem;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    padding: 0 10px;
 }
 
 .playerInfo {
     font-family: "Roboto";
-    color:var(--text-primary);
+    color: var(--text-primary);
     font-size: 0.7rem;
     line-height: 0.1rem;
     background-color: transparent;
@@ -106,5 +181,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
