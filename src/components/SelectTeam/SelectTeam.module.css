@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.header {
+    display: flex;
+    margin: 30px;
+    gap: 30px;
+}
+
+.imageContainer {
+    border: solid 3px white;
+    border-radius: 8px;
+}
+
+.imageContainer img {
+    width: 300px;
+    border-radius: 6px;
+}
+
+.textContainer {
+    flex: 1;
+    color: var(--text-primary);
+}
+
+.textContainer h1 {
+    margin: 0;
+    font-size: 3rem;
+}
+
+.textContainer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.mainBody {
+    display: flex;
+    gap: 50px;
+    margin: 50px 30px;
+}
+
+/* .pitch {
+    position: relative;
+    width: 600px;
+    height: 600px;
+} */
+
+.pitch {
+    width: 1000px;
+    height: 1000px;
+    background-color: var(--brand);
+}
+
+.pitch img{
+    position: absolute;
+    top: 80%;
+    left: 55%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center center;
+    width: auto;
+    height: 100%;
+}
+
+.playersContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+    text-align: center;
+    margin: 0 20px;
+    align-items: start;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 0px 0px 0px;
+    background-color: transparent;
+    text-align: center;
+    height: 100%; 
+}
+
+.card img {
+    width: 100%; 
+    height: auto; 
+    max-height: 100px; 
+    object-fit: contain;  
+    border-radius: 8px 8px 0 0;
+    background-color: var(--background-tertiary);
+    margin-bottom: 15px;
+}
+
+.playerInfo {
+    font-family: "Roboto";
+    color:var(--text-primary);
+    font-size: 0.7rem;
+    line-height: 0.1rem;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.playerFiltering {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}

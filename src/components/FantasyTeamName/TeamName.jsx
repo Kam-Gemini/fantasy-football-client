@@ -29,7 +29,7 @@ export default function FantasyTeamName() {
             const data = await signin(formData)
             setToken(data.token)
             setUser(getUserFromToken())
-            handleNavigate()
+            navigate('/selectteam')
         } catch (error) {
             setErrors(error.response.data)
             console.log('Error Object Detail', error.response.data.detail)

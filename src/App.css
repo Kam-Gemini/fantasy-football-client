@@ -99,17 +99,6 @@ body,
   font-size: 22px;
 }
 
-.sitename {
-
-  background-image: url(./components/NavMenu/stickypopcorn.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 70px;
-  width: 600px;
-
-}
-
 .error-message {
   margin: 0.5rem 0;
   color: var(--error);
