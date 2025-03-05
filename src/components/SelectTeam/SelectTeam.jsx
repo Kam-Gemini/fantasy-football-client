@@ -3,10 +3,9 @@ import { UserContext } from '../../contexts/UserContext'
 import { useParams } from 'react-router'
 import { teamShow, teamIndex, teamUpdate } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
-import PlayerCard from './PlayerCard'
-import VacantPlayer from './VacantPlayer'
-import Filters from './Filters'
-import Spinner from '../Spinner/Spinner'
+import Pitch from './Pitch'
+import Players from './Players'
+import SavedTeam from './SavedTeam'
 
 import styles from './SelectTeam.module.css'
 
@@ -18,6 +17,8 @@ export default function SelectTeam ({ existingTeam }) {
     const [displayedPlayers, setDisplayedPlayers] = useState([])
     const [filterBy, setFilterBy] = useState('All')
     const [isLoading, setIsLoading] = useState(true)
+    const [isSaved, setIsSaved] = useState(false)
+    const [savedTeam, setSavedTeam] = useState(null)
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const { team } = useParams()
     const [allTeams, setAllTeams] = useState([])
@@ -90,6 +91,10 @@ export default function SelectTeam ({ existingTeam }) {
         }
     }, [allTeams, user.id])
 
+    useEffect(() => {
+        console.log('isSaved changed:', isSaved)
+    }, [isSaved])
+
     const handleAddPlayer = (player) => {
         if (player.position === 'Goalkeeper') {
             setTeamData(prevState => ({ ...prevState, goalkeeper: player.id }))
@@ -144,7 +149,8 @@ export default function SelectTeam ({ existingTeam }) {
             console.log('team data', teamData)
             console.log('team id:', currentTeam.id)
             const updatedTeam = await teamUpdate(currentTeam.id, teamData)
-            setTeamData(updatedTeam)
+            setSavedTeam(updatedTeam)
+            setIsSaved(true)
             console.log('Team updated:', updatedTeam)
         } catch (error) {
             console.error('Error updating team:', error)
@@ -163,59 +169,25 @@ export default function SelectTeam ({ existingTeam }) {
                 </div>
             </section>
             <section className={styles.mainBody}>
-                <div className={styles.leftColumn}>
-                    <div className={styles.pitch}>
-                        <div className={styles.pitchGoalkeeper}>
-                            {teamData.goalkeeper ? 
-                                <button onClick={() => handleRemovePlayer('Goalkeeper')} className={styles.vacantButton}>
-                                    <PlayerCard player={players.find(player => player.id === teamData.goalkeeper)} />
-                                </button> 
-                                : <VacantPlayer position={"Goalkeeper"} />}
-                        </div>
-                        <div className={styles.pitchDefenders}>
-                            {teamData.defenders.map((defender, index) => (
-                                defender ? 
-                                    <button key={index} onClick={() => handleRemovePlayer('Defender', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={players.find(player => player.id === defender)} />
-                                    </button> 
-                                    : <VacantPlayer key={index} position={"Defender"} />
-                            ))}
-                        </div>
-                        <div className={styles.pitchMidfielders}>
-                            {teamData.midfielders.map((midfielder, index) => (
-                                midfielder ? 
-                                    <button key={index} onClick={() => handleRemovePlayer('Midfielder', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={players.find(player => player.id === midfielder)} />
-                                    </button> 
-                                    : <VacantPlayer key={index} position={"Midfielder"} />
-                            ))}
-                        </div>
-                        <div className={styles.pitchForwards}>
-                            {teamData.forwards.map((forward, index) => (
-                                forward ? 
-                                    <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={players.find(player => player.id === forward)} />
-                                    </button> 
-                                    : <VacantPlayer key={index} position={"Forward"} />
-                            ))}
-                        </div>
-                    </div>
-                    <div className={styles.saveButtonContainer}>
-                        <button onClick={handleSave} className={styles.saveButton}>SAVE</button>
-                    </div>
-                </div>
-                <div className={styles.rightColumn}>
-                    <Filters filterBy={filterBy} setFilterBy={setFilterBy} listAllClubs={listAllClubs}/>
-                    <div className={styles.playersContainer}>
-                    { isLoading ? <Spinner /> : 
-                        displayedPlayers.map(player => (
-                            <button key={player.id} onClick={() => handleAddPlayer(player)} className={styles.playerButton}>
-                                <PlayerCard player={player} />
-                            </button>
-                        ))
-                    }
-                    </div>
-                </div>
+                <Pitch 
+                    teamData={teamData} 
+                    players={players}
+                    currentTeam={currentTeam}
+                    handleRemovePlayer={handleRemovePlayer} 
+                    handleSave={handleSave} 
+                />
+                {isSaved ? (
+                    <SavedTeam savedTeam={savedTeam} />
+                ) : (
+                    <Players 
+                        filterBy={filterBy} 
+                        setFilterBy={setFilterBy} 
+                        listAllClubs={listAllClubs} 
+                        isLoading={isLoading} 
+                        displayedPlayers={displayedPlayers} 
+                        handleAddPlayer={handleAddPlayer} 
+                    />
+                )}
             </section>
         </>
     )

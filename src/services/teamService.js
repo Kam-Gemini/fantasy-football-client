@@ -55,3 +55,17 @@ export const teamShow = async (teamId, teamData) => {
         throw error;
     }
 }
+
+export const teamDelete = async (teamId) => {
+    try {
+        const res = await axios.delete(`${BASE_URL}${teamId}/`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}
