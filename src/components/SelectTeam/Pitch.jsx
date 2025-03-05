@@ -1,30 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { teamDelete } from '../../services/teamService'
 import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
 
-const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, currentTeam}) => {
-    const [isSaved, setIsSaved] = useState(false)
+const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved }) => {
+    const [initialTeamData, setInitialTeamData] = useState(teamData)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setInitialTeamData(teamData)
+    }, [teamData])
 
     const handleSaveClick = (e) => {
         handleSave(e)
-        setIsSaved(true)
-    }
-
-    const handleDelete = async () => {
-        console.log(currentTeam)
-        const confirmDelete = window.confirm("Are you sure you want to delete this team")
-        if (confirmDelete) {
-            try {
-                await teamDelete(currentTeam.id)
-                navigate(`/fantasyteamname`)
-            } catch (error) {
-                console.log("failed to delete team", error)
-            }
-        }
     }
 
     return (

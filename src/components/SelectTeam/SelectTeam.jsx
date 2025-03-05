@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
-import { useParams } from 'react-router'
-import { teamShow, teamIndex, teamUpdate } from '../../services/teamService'
+import { useParams, useNavigate } from 'react-router'
+import { teamShow, teamIndex, teamUpdate, teamDelete } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
 import Pitch from './Pitch'
 import Players from './Players'
@@ -23,6 +23,7 @@ export default function SelectTeam ({ existingTeam }) {
     const { team } = useParams()
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
+    const navigate = useNavigate()
 
     const initializeTeamData = (team) => {
         return {
@@ -155,7 +156,23 @@ export default function SelectTeam ({ existingTeam }) {
         } catch (error) {
             console.error('Error updating team:', error)
         }
-    }   
+    }
+
+    const handleDelete = async () => {
+        if (currentTeam) {
+            const confirmDelete = window.confirm("Are you sure you want to delete this team?")
+            if (confirmDelete) {
+                try {
+                    await teamDelete(currentTeam.id)
+                    navigate(`/fantasyteamname`)
+                } catch (error) {
+                    console.log("Failed to delete team", error)
+                }
+            }
+        } else {
+            console.log("No team selected for deletion")
+        }
+    }
 
     return (
         <>
@@ -171,10 +188,14 @@ export default function SelectTeam ({ existingTeam }) {
             <section className={styles.mainBody}>
                 <Pitch 
                     teamData={teamData} 
-                    players={players}
-                    currentTeam={currentTeam}
+                    players={players} 
                     handleRemovePlayer={handleRemovePlayer} 
                     handleSave={handleSave} 
+                    handleEdit={() => setIsSaved(false)} // Pass handleEdit function
+                    handleDelete={handleDelete} // Pass handleDelete function
+                    currentTeam={currentTeam} // Pass currentTeam to Pitch component
+                    setTeamData={setTeamData} // Pass setTeamData to Pitch component
+                    isSaved={isSaved} // Pass isSaved state to Pitch component
                 />
                 {isSaved ? (
                     <SavedTeam savedTeam={savedTeam} />

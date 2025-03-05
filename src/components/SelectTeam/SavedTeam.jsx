@@ -1,8 +1,14 @@
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+
 import styles from './SelectTeam.module.css'
 
 export default function SavedTeam({ savedTeam }) {
+    const { user } = useContext(UserContext)
+    console.log('user: ', user)
+
     if (!savedTeam) {
-        return null; // or return a placeholder component
+        return null
     }
 
     return (
