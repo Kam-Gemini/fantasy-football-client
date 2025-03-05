@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+import { useParams } from 'react-router'
+import { teamShow, teamIndex, teamUpdate } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
 import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
@@ -7,27 +10,39 @@ import Spinner from '../Spinner/Spinner'
 
 import styles from './SelectTeam.module.css'
 
-export default function SelectTeam () {
+export default function SelectTeam ({ existingTeam }) {
 
     // State
+    const { user } = useContext(UserContext)
     const [players, setPlayers] = useState([])
     const [displayedPlayers, setDisplayedPlayers] = useState([])
     const [filterBy, setFilterBy] = useState('All')
     const [isLoading, setIsLoading] = useState(true)
-    const [team, setTeam] = useState(null) // State to save the selected team
     const listAllClubs = [...new Set(players.map(player => player.club))]
-    const [teamData, setTeamData] = useState({
+    const { team } = useParams()
+    const [allTeams, setAllTeams] = useState([])
+    const [currentTeam, setCurrentTeam] = useState(null)
+
+    const initializeTeamData = (team) => {
+        return {
+            goalkeeper: team.goalkeeper || null,
+            defenders: team.defenders && team.defenders.length === 4 ? team.defenders : [null, null, null, null],
+            midfielders: team.midfielders && team.midfielders.length === 3 ? team.midfielders : [null, null, null],
+            forwards: team.forwards && team.forwards.length === 3 ? team.forwards : [null, null, null],
+        }
+    }
+
+    const [teamData, setTeamData] = useState(initializeTeamData(existingTeam || {
         goalkeeper: null,
         defenders: [null, null, null, null],
         midfielders: [null, null, null],
         forwards: [null, null, null],
-     })
+    }))
 
     useEffect(() => {
         playerIndex()
             .then(data => {
                 setPlayers(data)
-                console.log(data)
             })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
@@ -52,34 +67,58 @@ export default function SelectTeam () {
 
     }, [filterBy, players])
 
-    const handlePlayerClick = (player) => {
+    useEffect(() => {
+        teamIndex()
+            .then(data => {
+                setAllTeams(data)
+            })
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
+    }, [])
+
+    useEffect(() => {
+        if (allTeams.length > 0) {
+            const team = allTeams.find(team => team.user === user.id)
+            if (team) {
+                setCurrentTeam(team)
+                teamShow(team.id)
+                    .then(data => {
+                        setTeamData(initializeTeamData(data))
+                    })
+                    .catch(err => console.log(err))
+            }
+        }
+    }, [allTeams, user.id])
+
+    const handleAddPlayer = (player) => {
         if (player.position === 'Goalkeeper') {
-            setTeamData(prevState => ({ ...prevState, goalkeeper: player }))
+            setTeamData(prevState => ({ ...prevState, goalkeeper: player.id }))
         } else if (player.position === 'Defender') {
             setTeamData(prevState => {
                 const newDefenders = [...prevState.defenders]
                 const index = newDefenders.findIndex(defender => defender === null)
-                if (index !== -1) newDefenders[index] = player
+                if (index !== -1) newDefenders[index] = player.id
                 return { ...prevState, defenders: newDefenders }
             })
         } else if (player.position === 'Midfielder') {
             setTeamData(prevState => {
                 const newMidfielders = [...prevState.midfielders]
                 const index = newMidfielders.findIndex(midfielder => midfielder === null)
-                if (index !== -1) newMidfielders[index] = player
+                if (index !== -1) newMidfielders[index] = player.id
                 return { ...prevState, midfielders: newMidfielders }
             })
         } else if (player.position === 'Forward') {
             setTeamData(prevState => {
                 const newForwards = [...prevState.forwards]
                 const index = newForwards.findIndex(forward => forward === null)
-                if (index !== -1) newForwards[index] = player
+                if (index !== -1) newForwards[index] = player.id
                 return { ...prevState, forwards: newForwards }
             })
         }
+        console.log('team: ', teamData)
     }
 
-    const handleVacantClick = (position, index) => {
+    const handleRemovePlayer = (position, index) => {
         setTeamData(prevState => {
             if (position === 'Goalkeeper') {
                 return { ...prevState, goalkeeper: null }
@@ -99,10 +138,18 @@ export default function SelectTeam () {
         })
     }
 
-    const handleSave = () => {
-        setTeam(teamData)
-        console.log('Team saved:', teamData)
-    }
+    const handleSave = async (e) => {
+        e.preventDefault()
+        try {
+            console.log('team data', teamData)
+            console.log('team id:', currentTeam.id)
+            const updatedTeam = await teamUpdate(currentTeam.id, teamData)
+            setTeamData(updatedTeam)
+            console.log('Team updated:', updatedTeam)
+        } catch (error) {
+            console.error('Error updating team:', error)
+        }
+    }   
 
     return (
         <>
@@ -120,16 +167,16 @@ export default function SelectTeam () {
                     <div className={styles.pitch}>
                         <div className={styles.pitchGoalkeeper}>
                             {teamData.goalkeeper ? 
-                                <button onClick={() => handleVacantClick('Goalkeeper')} className={styles.vacantButton}>
-                                    <PlayerCard player={teamData.goalkeeper} />
+                                <button onClick={() => handleRemovePlayer('Goalkeeper')} className={styles.vacantButton}>
+                                    <PlayerCard player={players.find(player => player.id === teamData.goalkeeper)} />
                                 </button> 
                                 : <VacantPlayer position={"Goalkeeper"} />}
                         </div>
                         <div className={styles.pitchDefenders}>
                             {teamData.defenders.map((defender, index) => (
                                 defender ? 
-                                    <button key={index} onClick={() => handleVacantClick('Defender', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={defender} />
+                                    <button key={index} onClick={() => handleRemovePlayer('Defender', index)} className={styles.vacantButton}>
+                                        <PlayerCard player={players.find(player => player.id === defender)} />
                                     </button> 
                                     : <VacantPlayer key={index} position={"Defender"} />
                             ))}
@@ -137,8 +184,8 @@ export default function SelectTeam () {
                         <div className={styles.pitchMidfielders}>
                             {teamData.midfielders.map((midfielder, index) => (
                                 midfielder ? 
-                                    <button key={index} onClick={() => handleVacantClick('Midfielder', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={midfielder} />
+                                    <button key={index} onClick={() => handleRemovePlayer('Midfielder', index)} className={styles.vacantButton}>
+                                        <PlayerCard player={players.find(player => player.id === midfielder)} />
                                     </button> 
                                     : <VacantPlayer key={index} position={"Midfielder"} />
                             ))}
@@ -146,8 +193,8 @@ export default function SelectTeam () {
                         <div className={styles.pitchForwards}>
                             {teamData.forwards.map((forward, index) => (
                                 forward ? 
-                                    <button key={index} onClick={() => handleVacantClick('Forward', index)} className={styles.vacantButton}>
-                                        <PlayerCard player={forward} />
+                                    <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton}>
+                                        <PlayerCard player={players.find(player => player.id === forward)} />
                                     </button> 
                                     : <VacantPlayer key={index} position={"Forward"} />
                             ))}
@@ -162,7 +209,7 @@ export default function SelectTeam () {
                     <div className={styles.playersContainer}>
                     { isLoading ? <Spinner /> : 
                         displayedPlayers.map(player => (
-                            <button key={player.id} onClick={() => handlePlayerClick(player)} className={styles.playerButton}>
+                            <button key={player.id} onClick={() => handleAddPlayer(player)} className={styles.playerButton}>
                                 <PlayerCard player={player} />
                             </button>
                         ))
