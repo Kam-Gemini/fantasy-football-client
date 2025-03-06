@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { teamDelete } from '../../services/teamService'
+import React, { useEffect } from 'react'
 import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
 
 const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved }) => {
-    const [initialTeamData, setInitialTeamData] = useState(teamData)
-    const navigate = useNavigate()
-
     useEffect(() => {
-        setInitialTeamData(teamData)
+        console.log('Pitch teamData:', teamData)
     }, [teamData])
 
-    const handleSaveClick = (e) => {
-        handleSave(e)
+    const getPlayerById = (id) => {
+        const player = players.find(player => player.id === id)
+        console.log('getPlayerById:', id, player)
+        return player
     }
 
     return (
@@ -23,35 +20,35 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
                 <div className={styles.pitchGoalkeeper}>
                     {teamData.goalkeeper ? 
                         <button onClick={() => handleRemovePlayer('Goalkeeper')} className={styles.vacantButton}>
-                            <PlayerCard player={players.find(player => player.id === teamData.goalkeeper)} />
+                            <PlayerCard player={getPlayerById(teamData.goalkeeper)} />
                         </button> 
-                        : <VacantPlayer position={"Goalkeeper"} />}
+                        : <VacantPlayer position={"Goalkeeper"} disabled={true} />}
                 </div>
                 <div className={styles.pitchDefenders}>
                     {teamData.defenders.map((defender, index) => (
                         defender ? 
                             <button key={index} onClick={() => handleRemovePlayer('Defender', index)} className={styles.vacantButton}>
-                                <PlayerCard player={players.find(player => player.id === defender)} />
+                                <PlayerCard player={getPlayerById(defender)} />
                             </button> 
-                            : <VacantPlayer key={index} position={"Defender"} />
+                            : <VacantPlayer key={index} position={"Defender"} disabled={true} />
                     ))}
                 </div>
                 <div className={styles.pitchMidfielders}>
                     {teamData.midfielders.map((midfielder, index) => (
                         midfielder ? 
                             <button key={index} onClick={() => handleRemovePlayer('Midfielder', index)} className={styles.vacantButton}>
-                                <PlayerCard player={players.find(player => player.id === midfielder)} />
+                                <PlayerCard player={getPlayerById(midfielder)} />
                             </button> 
-                            : <VacantPlayer key={index} position={"Midfielder"} />
+                            : <VacantPlayer key={index} position={"Midfielder"} disabled={true} />
                     ))}
                 </div>
                 <div className={styles.pitchForwards}>
                     {teamData.forwards.map((forward, index) => (
                         forward ? 
                             <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton}>
-                                <PlayerCard player={players.find(player => player.id === forward)} />
+                                <PlayerCard player={getPlayerById(forward)} />
                             </button> 
-                            : <VacantPlayer key={index} position={"Forward"} />
+                            : <VacantPlayer key={index} position={"Forward"} disabled={true} />
                     ))}
                 </div>
             </div>
@@ -62,7 +59,7 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
                         <button onClick={handleDelete} className={styles.deleteButton}>DELETE</button>
                     </>
                 ) : (
-                    <button onClick={handleSaveClick} className={styles.saveButton}>SAVE</button>
+                    <button onClick={handleSave} className={styles.saveButton}>SAVE</button>
                 )}
             </div>
         </div>

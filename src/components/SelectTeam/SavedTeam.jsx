@@ -5,7 +5,6 @@ import styles from './SelectTeam.module.css'
 
 export default function SavedTeam({ savedTeam }) {
     const { user } = useContext(UserContext)
-    console.log('user: ', user)
 
     if (!savedTeam) {
         return null

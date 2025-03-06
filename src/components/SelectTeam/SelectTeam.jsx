@@ -1,13 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
-import { useParams, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { teamShow, teamIndex, teamUpdate, teamDelete } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
 import Pitch from './Pitch'
 import Players from './Players'
 import SavedTeam from './SavedTeam'
 import DeleteTeam from './DeleteTeam'
-import { Modal, Button } from 'react-bootstrap'
 
 import styles from './SelectTeam.module.css'
 
@@ -22,7 +21,6 @@ export default function SelectTeam ({ existingTeam }) {
     const [isSaved, setIsSaved] = useState(false)
     const [savedTeam, setSavedTeam] = useState(null)
     const listAllClubs = [...new Set(players.map(player => player.club))]
-    const { team } = useParams()
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
@@ -30,10 +28,10 @@ export default function SelectTeam ({ existingTeam }) {
 
     const initializeTeamData = (team) => {
         return {
-            goalkeeper: team.goalkeeper || null,
-            defenders: team.defenders && team.defenders.length === 4 ? team.defenders : [null, null, null, null],
-            midfielders: team.midfielders && team.midfielders.length === 3 ? team.midfielders : [null, null, null],
-            forwards: team.forwards && team.forwards.length === 3 ? team.forwards : [null, null, null],
+            goalkeeper: team.goalkeeper?.id || null,
+            defenders: team.defenders && team.defenders.length === 4 ? team.defenders.map(defender => defender?.id || null) : [null, null, null, null],
+            midfielders: team.midfielders && team.midfielders.length === 3 ? team.midfielders.map(midfielder => midfielder?.id || null) : [null, null, null],
+            forwards: team.forwards && team.forwards.length === 3 ? team.forwards.map(forward => forward?.id || null) : [null, null, null],
         }
     }
 
@@ -48,6 +46,7 @@ export default function SelectTeam ({ existingTeam }) {
         playerIndex()
             .then(data => {
                 setPlayers(data)
+                console.log('players:', data)
             })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
@@ -86,14 +85,29 @@ export default function SelectTeam ({ existingTeam }) {
             const team = allTeams.find(team => team.user === user.id)
             if (team) {
                 setCurrentTeam(team)
+                console.log("team found: ", team)
                 teamShow(team.id)
                     .then(data => {
+                        console.log("team show: ", data)
                         setTeamData(initializeTeamData(data))
                     })
                     .catch(err => console.log(err))
+            } else {
+                console.log("No team found for user")
             }
         }
     }, [allTeams, user.id])
+
+    useEffect(() => {
+        if (existingTeam) {
+            console.log("existingTeam: ", existingTeam)
+            setTeamData(initializeTeamData(existingTeam))
+        }
+    }, [existingTeam])
+
+    useEffect(() => {
+        console.log('teamData changed:', teamData)
+    }, [teamData])
 
     useEffect(() => {
         console.log('isSaved changed:', isSaved)
@@ -124,7 +138,6 @@ export default function SelectTeam ({ existingTeam }) {
                 return { ...prevState, forwards: newForwards }
             })
         }
-        console.log('team: ', teamData)
     }
 
     const handleRemovePlayer = (position, index) => {
@@ -150,8 +163,6 @@ export default function SelectTeam ({ existingTeam }) {
     const handleSave = async (e) => {
         e.preventDefault()
         try {
-            console.log('team data', teamData)
-            console.log('team id:', currentTeam.id)
             const updatedTeam = await teamUpdate(currentTeam.id, teamData)
             setSavedTeam(updatedTeam)
             setIsSaved(true)
@@ -188,7 +199,8 @@ export default function SelectTeam ({ existingTeam }) {
                 </div>
                 <div className={styles.textContainer}>
                     <h1>Fantasy Football</h1>
-                    <p>Create your own team</p>
+                    <p>Create your own team...</p>
+                    <h2>Total Cost: </h2>
                 </div>
             </section>
             <section className={styles.mainBody}>
@@ -203,7 +215,7 @@ export default function SelectTeam ({ existingTeam }) {
                     setTeamData={setTeamData} // Pass setTeamData to Pitch component
                     isSaved={isSaved} // Pass isSaved state to Pitch component
                 />
-                {isSaved ? (
+                {isSaved || existingTeam ? (
                     <SavedTeam savedTeam={savedTeam} />
                 ) : (
                     <Players 

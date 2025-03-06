@@ -49,7 +49,7 @@ export default function FavouriteTeam() {
                         <img src="/assets/Everton.png" alt="Everton" />
                     </button>
                     <button value="Nottingham Forest" onClick={handleTeamSelect}>
-                        <img src="/assets/Forest.png" alt="Nottingham Forest" />
+                        <img src="/assets/NottinghamForest.png" alt="Nottingham Forest" />
                     </button>
                     <button value="Fulham" onClick={handleTeamSelect}>
                         <img src="/assets/Fulham.png" alt="Fulham" />
