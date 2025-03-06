@@ -11,10 +11,14 @@ export default function SavedTeam({ savedTeam }) {
         return null
     }
 
+    const favouriteTeamImage = user.favourite_team.replace(/\s+/g, '')
+
     return (
         <section className={styles.savedTeam}>
-            <h1>{savedTeam.team_name}</h1>
-            <p>Total Cost: <strong>{savedTeam.total_cost}</strong></p>
+            <h1>Welcome Back {user.username}</h1>
+            <img src={`/assets/${favouriteTeamImage}.png`} alt={user.favourite_team} />
+            <h2>{savedTeam.team_name}</h2>
+            <p>Total Cost: <strong>{savedTeam.total_cost}m</strong></p>
             <p>Total Points: <strong>{savedTeam.total_points}</strong></p>
         </section>
     )
