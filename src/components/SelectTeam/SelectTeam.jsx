@@ -6,6 +6,8 @@ import { playerIndex } from '../../services/playerService'
 import Pitch from './Pitch'
 import Players from './Players'
 import SavedTeam from './SavedTeam'
+import DeleteTeam from './DeleteTeam'
+import { Modal, Button } from 'react-bootstrap'
 
 import styles from './SelectTeam.module.css'
 
@@ -23,6 +25,7 @@ export default function SelectTeam ({ existingTeam }) {
     const { team } = useParams()
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
+    const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
     const navigate = useNavigate()
 
     const initializeTeamData = (team) => {
@@ -160,17 +163,20 @@ export default function SelectTeam ({ existingTeam }) {
 
     const handleDelete = async () => {
         if (currentTeam) {
-            const confirmDelete = window.confirm("Are you sure you want to delete this team?")
-            if (confirmDelete) {
-                try {
-                    await teamDelete(currentTeam.id)
-                    navigate(`/fantasyteamname`)
-                } catch (error) {
-                    console.log("Failed to delete team", error)
-                }
-            }
+            setShowDeleteModal(true) // Show the delete confirmation modal
         } else {
             console.log("No team selected for deletion")
+        }
+    }
+
+    const confirmDelete = async () => {
+        try {
+            await teamDelete(currentTeam.id)
+            navigate(`/fantasyteamname`)
+        } catch (error) {
+            console.log("Failed to delete team", error)
+        } finally {
+            setShowDeleteModal(false) // Hide the modal
         }
     }
 
@@ -210,6 +216,12 @@ export default function SelectTeam ({ existingTeam }) {
                     />
                 )}
             </section>
+            {/* Delete Confirmation Modal */}
+            <DeleteTeam
+                show={showDeleteModal}
+                onHide={() => setShowDeleteModal(false)}
+                onConfirm={confirmDelete}
+            />
         </>
     )
 }

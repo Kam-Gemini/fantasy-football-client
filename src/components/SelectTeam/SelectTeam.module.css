@@ -18,7 +18,7 @@
 
 .textContainer {
     flex: 1;
-    color: var(--text-primary);
+    color: white;
 }
 
 .textContainer h1 {
@@ -268,5 +268,32 @@
 }
 
 .savedTeam {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     color: white;
 }
+
+.savedTeam img {
+    margin: 20px 0;
+}
+
+.customModalHeader {
+    background-color: #495057 !important;
+    color: white !important;
+}
+
+.customModalBody {
+    background-color: #495057 !important;
+    color: white !important;
+    padding: 20px !important;
+}
+
+.customModalFooter {
+    background-color: white !important;
+    border-top: none !important;
+}
+
+.customModal {
+    background-color: transparent;
+  }
