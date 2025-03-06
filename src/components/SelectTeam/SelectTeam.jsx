@@ -23,10 +23,10 @@ export default function SelectTeam ({ existingTeam }) {
     const [savedTeam, setSavedTeam] = useState(null)
     const [totalCost, setTotalCost] = useState(0)
     const [costExceeded, setCostExceeded] = useState(false)
-    const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false)
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
+    const [pickedPlayers, setPickedPlayers] = useState([])
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
     const navigate = useNavigate()
 
@@ -166,7 +166,6 @@ export default function SelectTeam ({ existingTeam }) {
 
     const handleSave = async (e) => {
         e.preventDefault()
-        setIsSaveButtonClicked(true)
         try {
             const updatedTeam = await teamUpdate(currentTeam.id, teamData)
             setSavedTeam(updatedTeam)
@@ -242,6 +241,7 @@ export default function SelectTeam ({ existingTeam }) {
                     currentTeam={currentTeam} // Pass currentTeam to Pitch component
                     setTeamData={setTeamData} // Pass setTeamData to Pitch component
                     isSaved={isSaved} // Pass isSaved state to Pitch component
+                    pickedPlayers={pickedPlayers}
                 />
                 {isSaved || existingTeam ? (
                     <SavedTeam savedTeam={savedTeam} />
@@ -252,7 +252,8 @@ export default function SelectTeam ({ existingTeam }) {
                         listAllClubs={listAllClubs} 
                         isLoading={isLoading} 
                         displayedPlayers={displayedPlayers} 
-                        handleAddPlayer={handleAddPlayer} 
+                        handleAddPlayer={handleAddPlayer}
+                        pickedPlayers={pickedPlayers}
                     />
                 )}
             </section>
@@ -262,15 +263,6 @@ export default function SelectTeam ({ existingTeam }) {
                 onHide={() => setShowDeleteModal(false)}
                 onConfirm={confirmDelete}
             />
-            {!isSaveButtonClicked && (
-                <button 
-                    onClick={handleSave} 
-                    className={styles.saveButton} 
-                    disabled={costExceeded}
-                >
-                    Save
-                </button>
-            )}
         </>
     )
 }

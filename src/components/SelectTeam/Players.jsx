@@ -4,8 +4,7 @@ import Filters from './Filters'
 import Spinner from '../Spinner/Spinner'
 import styles from './SelectTeam.module.css'
 
-const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer }) => {
-    const [pickedPlayers, setPickedPlayers] = useState([])
+const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, setPickedPlayers }) => {
 
     const handlePlayerClick = (player) => {
         handleAddPlayer(player)
@@ -20,7 +19,7 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
                     displayedPlayers.map(player => (
                         <button 
                             key={player.id} 
-                            onClick={() => handlePlayerClick(player)} 
+                            onClick={() => handleAddPlayer(player)} 
                             className={styles.playerButton}
                             disabled={pickedPlayers.includes(player.id)}
                         >
