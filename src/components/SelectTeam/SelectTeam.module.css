@@ -53,9 +53,7 @@
 
 .pitch {
     width: 1000px;
-    /* Fixed width */
-    height: 1000px;
-    /* Fixed height */
+    height: 1100px;
     background-color: var(--brand);
     position: relative;
     /* Ensure absolute positioning of child elements works correctly */
@@ -68,6 +66,9 @@
     position: absolute;
     text-align: center;
     color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .pitchGoalkeeper {
@@ -80,8 +81,6 @@
     top: 30%;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between;
     width: 80%;
 }
 
@@ -89,8 +88,6 @@
     top: 55%;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between;
     width: 60%;
 }
 
@@ -98,8 +95,6 @@
     top: 80%;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between;
     width: 60%;
 }
 
@@ -178,8 +173,6 @@
 .vacantPlayerInfo {
     font-family: "Roboto";
     color: var(--text-primary);
-    font-size: 0.7rem;
-    line-height: 0.1rem;
     background-color: transparent;
     border: none;
     text-decoration: none;
@@ -213,7 +206,10 @@
     cursor: pointer;
     display: inline-block;
     text-align: left;
-    width: 100%;
+}
+
+.vacantButton {
+    width: 120px;
 }
 
 .saveButtonContainer {
