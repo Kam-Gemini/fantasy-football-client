@@ -4,13 +4,9 @@ import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
 
 const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved }) => {
-    useEffect(() => {
-        console.log('Pitch teamData:', teamData)
-    }, [teamData])
 
     const getPlayerById = (id) => {
         const player = players.find(player => player.id === id)
-        console.log('getPlayerById:', id, player)
         return player
     }
 

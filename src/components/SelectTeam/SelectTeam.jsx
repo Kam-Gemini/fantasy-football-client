@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import { useNavigate } from 'react-router'
+import { removeToken } from '../../utils/auth'
 import { teamShow, teamIndex, teamUpdate, teamDelete } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
 import Pitch from './Pitch'
@@ -13,18 +14,27 @@ import styles from './SelectTeam.module.css'
 export default function SelectTeam ({ existingTeam }) {
 
     // State
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     const [players, setPlayers] = useState([])
     const [displayedPlayers, setDisplayedPlayers] = useState([])
     const [filterBy, setFilterBy] = useState('All')
     const [isLoading, setIsLoading] = useState(true)
     const [isSaved, setIsSaved] = useState(false)
     const [savedTeam, setSavedTeam] = useState(null)
+    const [totalCost, setTotalCost] = useState(0)
+    const [costExceeded, setCostExceeded] = useState(false)
+    const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false)
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
     const navigate = useNavigate()
+
+    const signOut = () => {
+        removeToken()
+        setUser(null)
+        navigate('/')
+    }
 
     const initializeTeamData = (team) => {
         return {
@@ -46,7 +56,6 @@ export default function SelectTeam ({ existingTeam }) {
         playerIndex()
             .then(data => {
                 setPlayers(data)
-                console.log('players:', data)
             })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
@@ -85,10 +94,8 @@ export default function SelectTeam ({ existingTeam }) {
             const team = allTeams.find(team => team.user === user.id)
             if (team) {
                 setCurrentTeam(team)
-                console.log("team found: ", team)
                 teamShow(team.id)
                     .then(data => {
-                        console.log("team show: ", data)
                         setTeamData(initializeTeamData(data))
                     })
                     .catch(err => console.log(err))
@@ -100,18 +107,15 @@ export default function SelectTeam ({ existingTeam }) {
 
     useEffect(() => {
         if (existingTeam) {
-            console.log("existingTeam: ", existingTeam)
             setTeamData(initializeTeamData(existingTeam))
         }
     }, [existingTeam])
 
     useEffect(() => {
-        console.log('teamData changed:', teamData)
-    }, [teamData])
-
-    useEffect(() => {
-        console.log('isSaved changed:', isSaved)
-    }, [isSaved])
+        const total = calculateTotalCost()
+        setTotalCost(total)
+        setCostExceeded(total > 100)
+    }, [teamData, players])
 
     const handleAddPlayer = (player) => {
         if (player.position === 'Goalkeeper') {
@@ -162,11 +166,11 @@ export default function SelectTeam ({ existingTeam }) {
 
     const handleSave = async (e) => {
         e.preventDefault()
+        setIsSaveButtonClicked(true)
         try {
             const updatedTeam = await teamUpdate(currentTeam.id, teamData)
             setSavedTeam(updatedTeam)
             setIsSaved(true)
-            console.log('Team updated:', updatedTeam)
         } catch (error) {
             console.error('Error updating team:', error)
         }
@@ -191,6 +195,26 @@ export default function SelectTeam ({ existingTeam }) {
         }
     }
 
+    const calculateTotalCost = () => {
+        const playerIds = [
+            teamData.goalkeeper,
+            ...teamData.defenders,
+            ...teamData.midfielders,
+            ...teamData.forwards
+        ].filter(id => id !== null)
+
+        console.log('playerIds:', playerIds)
+
+        const totalCost = playerIds.reduce((total, id) => {
+            const player = players.find(player => player.id === id)
+            console.log('player:', player)
+            return total + (player ? parseFloat(player.price) : 0)
+        }, 0)
+
+        console.log('totalCost:', totalCost)
+        return totalCost
+    }
+
     return (
         <>
             <section className={styles.header}>
@@ -200,7 +224,11 @@ export default function SelectTeam ({ existingTeam }) {
                 <div className={styles.textContainer}>
                     <h1>Fantasy Football</h1>
                     <p>Create your own team...</p>
-                    <h2>Total Cost: </h2>
+                    <h2>Total Cost: {totalCost}m</h2>
+                    {costExceeded && <p className={styles.error}>You cannot spend more than 100m</p>}
+                </div>
+                <div className={styles.signOut}>
+                    <button onClick={signOut}>Sign out</button>
                 </div>
             </section>
             <section className={styles.mainBody}>
@@ -234,6 +262,15 @@ export default function SelectTeam ({ existingTeam }) {
                 onHide={() => setShowDeleteModal(false)}
                 onConfirm={confirmDelete}
             />
+            {!isSaveButtonClicked && (
+                <button 
+                    onClick={handleSave} 
+                    className={styles.saveButton} 
+                    disabled={costExceeded}
+                >
+                    Save
+                </button>
+            )}
         </>
     )
 }
