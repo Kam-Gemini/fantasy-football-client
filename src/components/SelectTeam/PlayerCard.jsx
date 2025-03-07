@@ -1,5 +1,4 @@
 import styles from './SelectTeam.module.css'
-import { Link } from 'react-router'
 
 export default function PlayerCard({ player }) {
     if (!player) {
