@@ -18,6 +18,7 @@ export default function SelectTeam ({ existingTeam }) {
     const [players, setPlayers] = useState([])
     const [displayedPlayers, setDisplayedPlayers] = useState([])
     const [filterBy, setFilterBy] = useState('All')
+    const [sortBy, setSortBy] = useState('') // State for sorting criteria
     const [isLoading, setIsLoading] = useState(true)
     const [isSaved, setIsSaved] = useState(false)
     const [savedTeam, setSavedTeam] = useState(null)
@@ -76,9 +77,18 @@ export default function SelectTeam ({ existingTeam }) {
             results = results.filter(player => player.club === filterBy)
         }
 
+        // Sort players based on the selected sorting criteria
+        if (sortBy === 'totalPoints') {
+            console.log('sort by points')
+            results.sort((a, b) => b.points - a.points)
+        } else if (sortBy === 'price') {
+            console.log('sort by price')
+            results.sort((b, a) => a.price - b.price)
+        }
+
         setDisplayedPlayers(results)
 
-    }, [filterBy, players])
+    }, [filterBy, players, sortBy])
 
     useEffect(() => {
         teamIndex()
@@ -248,7 +258,9 @@ export default function SelectTeam ({ existingTeam }) {
                 ) : (
                     <Players 
                         filterBy={filterBy} 
-                        setFilterBy={setFilterBy} 
+                        setFilterBy={setFilterBy}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy} 
                         listAllClubs={listAllClubs} 
                         isLoading={isLoading} 
                         displayedPlayers={displayedPlayers} 

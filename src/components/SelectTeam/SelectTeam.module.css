@@ -329,3 +329,8 @@
 .error {
     color: var(--error);
 }
+
+.filters {
+    display: flex;
+    gap: 30px;
+}

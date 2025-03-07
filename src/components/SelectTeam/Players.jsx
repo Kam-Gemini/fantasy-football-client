@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import PlayerCard from './PlayerCard'
 import Filters from './Filters'
+import Sorting from './Sorting'
 import Spinner from '../Spinner/Spinner'
 import styles from './SelectTeam.module.css'
 
-const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, setPickedPlayers }) => {
+const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, setPickedPlayers, sortBy, setSortBy }) => {
 
     const handlePlayerClick = (player) => {
         handleAddPlayer(player)
@@ -13,7 +14,10 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
 
     return (
         <div className={styles.rightColumn}>
-            <Filters filterBy={filterBy} setFilterBy={setFilterBy} listAllClubs={listAllClubs}/>
+            <div className={styles.filters}>
+                <Filters filterBy={filterBy} setFilterBy={setFilterBy} listAllClubs={listAllClubs}/>
+                <Sorting sortBy={sortBy} setSortBy={setSortBy} />
+            </div>
             <div className={styles.playersContainer}>
                 { isLoading ? <Spinner /> : 
                     displayedPlayers.map(player => (
