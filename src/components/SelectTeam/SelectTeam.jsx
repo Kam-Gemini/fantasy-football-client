@@ -77,12 +77,9 @@ export default function SelectTeam ({ existingTeam }) {
             results = results.filter(player => player.club === filterBy)
         }
 
-        // Sort players based on the selected sorting criteria
         if (sortBy === 'totalPoints') {
-            console.log('sort by points')
             results.sort((a, b) => b.points - a.points)
         } else if (sortBy === 'price') {
-            console.log('sort by price')
             results.sort((b, a) => a.price - b.price)
         }
 
