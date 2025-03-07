@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.header {
+    display: flex;
+    margin: 30px;
+    gap: 30px;
+}
+
+.imageContainer {
+    border: solid 3px white;
+    border-radius: 8px;
+}
+
+.imageContainer img {
+    width: 300px;
+    border-radius: 6px;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.textContainer h1 {
+    margin: 0;
+    font-size: 4rem;
+}
+
+.textContainer p {
+    margin-top: -10px;
+    font-size: 1rem;
+}
+
+.mainBody {
+    display: flex;
+    gap: 50px;
+    margin: 50px 30px;
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.pitch {
+    width: 1000px;
+    height: 1100px;
+    background-color: var(--brand);
+    position: relative;
+    /* Ensure absolute positioning of child elements works correctly */
+}
+
+.pitchGoalkeeper,
+.pitchDefenders,
+.pitchMidfielders,
+.pitchForwards {
+    position: absolute;
+    text-align: center;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pitchGoalkeeper {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pitchDefenders {
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+}
+
+.pitchMidfielders {
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+}
+
+.pitchForwards {
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+}
+
+.playersContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+    text-align: center;
+    margin: 0 20px;
+    align-items: start;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 0px 0px 0px;
+    background-color: transparent;
+    text-align: center;
+    height: 100%;
+    width: 120px;
+}
+
+.pitchGoalkeeper {
+    background-color: var(--brand);
+}
+
+.pitchDefenders {
+    background-color: var(--brand);
+}
+
+.pitchMidfielders {
+    background-color: var(--brand);
+}
+
+.pitchForwards {
+    background-color: var(--brand);
+}
+
+.vacantCard {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 0px 0px 0px;
+    background-color: transparent;
+    text-align: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.vacantCard img {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    object-fit: contain;
+    border-radius: 8px 8px 0 0;
+    background-color: transparent;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    object-fit: contain;
+    border-radius: 8px 8px 0 0;
+    background-color: transparent;
+    margin-bottom: 15px;
+    margin-top: -5px;
+}
+
+.vacantPlayerInfo {
+    font-family: "Roboto";
+    color: var(--text-primary);
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.playerInfo {
+    font-family: "Roboto";
+    color: var(--text-primary);
+    font-size: 0.7rem;
+    line-height: 0.1rem;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.playerFiltering {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.playerButton,
+.vacantButton {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-block;
+    text-align: left;
+}
+
+.vacantButton {
+    width: 120px;
+}
+
+.saveButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.saveButton {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 18px;
+    color: white;
+    background-color: #faa307;
+    border: none;
+    margin: 0.7rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.saveButton:hover {
+    background-color: #f48c06;
+}
+
+.saveButton:disabled {
+    background-color: #ffba08;
+    cursor: not-allowed;
+}
+
+.signOut {
+    margin-left: auto;
+}
+.signOut Button {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 18px;
+    color: white;
+    background-color: #faa307;
+    border: none;
+    margin: 0.7rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.signOut Button:hover {
+    background-color: #f48c06;
+}
+
+.signOut Button:disabled {
+    background-color: #ffba08;
+    cursor: not-allowed;
+}
+
+.deleteButton {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 18px;
+    color: white;
+    background-color: #e01e37;
+    border: none;
+    margin: 0.7rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.deleteButton:hover {
+    background-color: #b21e35;
+}
+
+.deleteButton:disabled {
+    background-color: #e01e37;
+    cursor: not-allowed;
+}
+
+.savedTeam {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: white;
+}
+
+.savedTeam img {
+    margin: 20px 0;
+}
+
+.customModalHeader {
+    background-color: #495057 !important;
+    color: white !important;
+}
+
+.customModalBody {
+    background-color: #495057 !important;
+    color: white !important;
+    padding: 20px !important;
+}
+
+.customModalFooter {
+    background-color: white !important;
+    border-top: none !important;
+}
+
+.customModal {
+    background-color: transparent;
+}
+
+.error {
+    color: var(--error);
+}
+
+.filters {
+    display: flex;
+    gap: 30px;
+}

@@ -25,14 +25,15 @@
 }
 
 .crestContainer img {
-    width: 150px;
+    width: 100px;
     /* Adjust the size as needed */
     height: auto;
     transition: transform 0.3s ease;
+    padding: 10px;
 }
 
 .crestContainer button:hover img {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .heading {

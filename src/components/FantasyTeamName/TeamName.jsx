@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
-import { signin } from '../../services/userService'
+import { teamPost } from '../../services/teamService'
 import { setToken } from '../../utils/auth'
 import { getUserFromToken } from '../../utils/auth'
 import { UserContext } from '../../contexts/UserContext'
@@ -14,7 +14,7 @@ export default function FantasyTeamName() {
     const { user, setUser } = useContext(UserContext)
 
     // State
-    const [formData, setFormData] = useState({
+    const [teamData, setTeamData] = useState({
         team_name: ''
     })
     const [errors, setErrors] = useState({})
@@ -26,20 +26,18 @@ export default function FantasyTeamName() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const data = await signin(formData)
+            const teamName = await teamPost(teamData)
+            console.log('Response data:', teamName)
             setToken(data.token)
             setUser(getUserFromToken())
-            handleNavigate()
+            setTeamData(teamName)
         } catch (error) {
-            setErrors(error.response.data)
-            console.log('Error Object Detail', error.response.data.detail)
         }
     }
 
     const handleChange = (e) => {
-        //console.dir(e.target)
         setErrors({ ...errors, [e.target.name]: '' })
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        setTeamData({ ...teamData, [e.target.name]: e.target.value })
     }
 
     return (
@@ -57,8 +55,7 @@ export default function FantasyTeamName() {
                         onChange={handleChange}
                     />
                 </div>
-
-                <button onClick={() => navigate('/')} disabled={!formData.team_name} type="submit" className={styles.button}>Submit</button>
+                <button onClick={() => navigate('/selectteam')} disabled={!teamData.team_name} type="submit" className={styles.button}>Submit</button>
             </form>
         </section>
     )
