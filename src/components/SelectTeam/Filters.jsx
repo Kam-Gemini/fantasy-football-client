@@ -1,12 +1,15 @@
 export default function ({ filterBy, setFilterBy, listAllClubs }) {
+    // Sort the listAllClubs array alphabetically
+    const sortedClubs = [...listAllClubs].sort((a, b) => a.localeCompare(b));
+
     return (
         <section id="filters">
             <select 
                 name="filterBy" 
                 value={filterBy} 
                 onChange={(event) => {
-                    const value = event.target.value
-                    setFilterBy(value)
+                    const value = event.target.value;
+                    setFilterBy(value);
                 }}
             >
                 <option value="All">All Players</option>
@@ -16,10 +19,10 @@ export default function ({ filterBy, setFilterBy, listAllClubs }) {
                 <option value="Midfielders">Midfielders</option>
                 <option value="Forwards">Forwards</option>
                 <option disabled>--By Club--</option>
-                {listAllClubs.map((club) => (
+                {sortedClubs.map((club) => (
                     <option key={club} value={club}>{club}</option>
                 ))}
             </select>
         </section>
-    )
+    );
 }
