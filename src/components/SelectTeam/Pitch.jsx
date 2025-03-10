@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
