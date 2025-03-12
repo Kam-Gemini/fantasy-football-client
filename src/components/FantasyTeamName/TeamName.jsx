@@ -27,7 +27,6 @@ export default function FantasyTeamName() {
         e.preventDefault()
         try {
             const teamName = await teamPost(teamData)
-            console.log('Response data:', teamName)
             setToken(data.token)
             setUser(getUserFromToken())
             setTeamData(teamName)

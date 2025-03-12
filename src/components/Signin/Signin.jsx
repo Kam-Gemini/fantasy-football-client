@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { signin } from '../../services/userService'
+import { teamIndex } from '../../services/teamService'
 import { setToken } from '../../utils/auth'
 import { getUserFromToken } from '../../utils/auth'
 import { UserContext } from '../../contexts/UserContext'
@@ -12,6 +13,7 @@ export default function Signin() {
     // Context
     // We need to pass the context into the useContext hook, which will give us any values set to it (in this case, user & setUser)
     const { user, setUser } = useContext(UserContext)
+    const [allTeams, setAllTeams] = useState([])
 
     // State
     const [formData, setFormData] = useState({
@@ -22,9 +24,19 @@ export default function Signin() {
 
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        user.favourite_team ? navigate('/fantasyteamname') : navigate('/favouriteteam')
+    const handleNavigate = (existingTeam) => {
+        user.favourite_team && existingTeam ? navigate('/selectteam') : user.favourite_team ? navigate('/fantasyteamname') : navigate('/favouriteteam')
     }
+
+    useEffect(() => {
+        teamIndex()
+            .then(data => {
+                setAllTeams(data)
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    
 
     //console.log(formData)
     // Events
@@ -34,10 +46,12 @@ export default function Signin() {
             const data = await signin(formData)
             setToken(data.token)
             setUser(getUserFromToken())
-            handleNavigate()
+            const existingTeam = allTeams.find(team => team.user === user.id)
+            console.log(existingTeam)
+            handleNavigate(existingTeam)
         } catch (error) {
             setErrors(error.response.data)
-            console.log('Error Object Detail', error.response.data.detail)
+            console.log('Error Object Detail', error.response.data)
         }
     }
 

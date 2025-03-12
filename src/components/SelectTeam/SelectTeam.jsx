@@ -57,7 +57,6 @@ export default function SelectTeam ({ existingTeam }) {
         playerIndex()
             .then(data => {
                 setPlayers(data)
-                console.log(data)
             })
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
@@ -210,15 +209,12 @@ export default function SelectTeam ({ existingTeam }) {
             ...teamData.forwards
         ].filter(id => id !== null)
 
-        console.log('playerIds:', playerIds)
-
         const totalCost = playerIds.reduce((total, id) => {
             const player = players.find(player => player.id === id)
             console.log('player:', player)
             return total + (player ? parseFloat(player.price) : 0)
         }, 0)
 
-        console.log('totalCost:', totalCost)
         return totalCost
     }
 
