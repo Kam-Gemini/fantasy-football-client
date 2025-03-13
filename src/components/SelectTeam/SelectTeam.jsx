@@ -11,7 +11,7 @@ import DeleteTeam from './DeleteTeam'
 
 import styles from './SelectTeam.module.css'
 
-export default function SelectTeam () {
+export default function SelectTeam ({ existingTeam }) {
 
     // State
     const { user, setUser } = useContext(UserContext)
@@ -46,7 +46,7 @@ export default function SelectTeam () {
         }
     }
 
-    const [teamData, setTeamData] = useState(initializeTeamData({
+    const [teamData, setTeamData] = useState(initializeTeamData(existingTeam || {
         goalkeeper: null,
         defenders: [null, null, null, null],
         midfielders: [null, null, null],
@@ -111,6 +111,12 @@ export default function SelectTeam () {
             }
         }
     }, [allTeams, user.id])
+
+    useEffect(() => {
+        if (existingTeam) {
+            setTeamData(initializeTeamData(existingTeam))
+        }
+    }, [existingTeam])
 
     useEffect(() => {
         const total = calculateTotalCost()
@@ -241,7 +247,7 @@ export default function SelectTeam () {
                     isSaved={isSaved} // Pass isSaved state to Pitch component
                     pickedPlayers={pickedPlayers}
                 />
-                {isSaved ? (
+                {isSaved || existingTeam ? (
                     <SavedTeam savedTeam={savedTeam} />
                 ) : (
                     <Players 

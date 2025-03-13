@@ -40,7 +40,7 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
                 <div className={styles.pitchForwards}>
                     {teamData.forwards.map((forward, index) => (
                         forward ? 
-                            <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton} disabled={isSaved}>
+                            <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton} disable={isSaved}>
                                 <PlayerCard player={getPlayerById(forward)} />
                             </button> 
                             : <VacantPlayer key={index} position={"Forward"} disabled={true} />
