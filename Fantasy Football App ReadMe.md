@@ -1,4 +1,4 @@
-# ReadMe
+# Fantasy Football App
 
 ## **Description**
 
@@ -397,7 +397,7 @@ const handleSubmit = async (e) => {
 
 ## 🎬 Registering Account and Creating Fantasy Team
 
-![Registering Account and Creating Fantasy Team](public/assets/Creating-New-Team.gif)
+![Registering Account and Creating Fantasy Team](public/assets/Creating-Team.gif)
 
 After creating a team name the user arrives at the select-team page or rather the SelectTeam component. The bulk of the complex functionality is built in this component, including fetching the players index and adding and removing players from the team. The basic concept is that clicking on a player button selects that player and adds it to the team, or rather updates the team state and adds that player to the vacant position in the Pitch component.
 
