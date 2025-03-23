@@ -54,7 +54,7 @@
 
 .pitch {
     width: 1000px;
-    height: 1100px;
+    height: 1200px;
     background-color: var(--brand);
     position: relative;
     /* Ensure absolute positioning of child elements works correctly */
@@ -108,7 +108,7 @@
     margin: 0 20px;
     align-items: start;
     width: 100%;
-    height: 1250px; /* Set a fixed height */
+    height: 1270px; /* Set a fixed height */
     overflow-y: auto; /* Add a vertical scrollbar when needed */
     border: 2px solid var(--border);
     padding: 20px 10px 20px 20px;
@@ -245,7 +245,7 @@
 }
 
 .saveButton:disabled {
-    background-color: #ffba08;
+    background-color: #ffd900;
     cursor: not-allowed;
 }
 

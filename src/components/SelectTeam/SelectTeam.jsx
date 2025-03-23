@@ -223,7 +223,7 @@ export default function SelectTeam ({ existingTeam }) {
 
         return totalCost
     }
-    console.log('team data', teamData)
+
     return (
         <>
             <section className={styles.header}>
@@ -252,6 +252,7 @@ export default function SelectTeam ({ existingTeam }) {
                     setTeamData={setTeamData} // Pass setTeamData to Pitch component
                     isSaved={isSaved} // Pass isSaved state to Pitch component
                     pickedPlayers={pickedPlayers}
+                    costExceeded={costExceeded}
                 />
                 {isSaved || existingTeam ? (
                     <SavedTeam savedTeam={savedTeam} />
