@@ -27,7 +27,6 @@ export default function SelectTeam ({ existingTeam }) {
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
-    const [pickedPlayers, setPickedPlayers] = useState([])
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
     const navigate = useNavigate()
 
@@ -52,6 +51,14 @@ export default function SelectTeam ({ existingTeam }) {
         midfielders: [null, null, null],
         forwards: [null, null, null],
     }))
+
+    // Derive pickedPlayers from teamData
+    const pickedPlayers = [
+        teamData.goalkeeper,
+        ...teamData.defenders,
+        ...teamData.midfielders,
+        ...teamData.forwards,
+    ].filter(playerId => playerId !== null)
 
     useEffect(() => {
         playerIndex()
@@ -211,13 +218,12 @@ export default function SelectTeam ({ existingTeam }) {
 
         const totalCost = playerIds.reduce((total, id) => {
             const player = players.find(player => player.id === id)
-            console.log('player:', player)
             return total + (player ? parseFloat(player.price) : 0)
         }, 0)
 
         return totalCost
     }
-
+    console.log('team data', teamData)
     return (
         <>
             <section className={styles.header}>

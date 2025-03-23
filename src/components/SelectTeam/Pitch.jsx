@@ -2,7 +2,7 @@ import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
 
-const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved, pickedPlayers, setPickedPlayers }) => {
+const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved }) => {
 
     const getPlayerById = (id) => {
         const player = players.find(player => player.id === id)
@@ -40,7 +40,7 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
                 <div className={styles.pitchForwards}>
                     {teamData.forwards.map((forward, index) => (
                         forward ? 
-                            <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton} disable={isSaved}>
+                            <button key={index} onClick={() => handleRemovePlayer('Forward', index)} className={styles.vacantButton} disabled={isSaved}>
                                 <PlayerCard player={getPlayerById(forward)} />
                             </button> 
                             : <VacantPlayer key={index} position={"Forward"} disabled={true} />

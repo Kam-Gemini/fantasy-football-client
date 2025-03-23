@@ -48,7 +48,6 @@ export const teamShow = async (teamId, teamData) => {
                 Authorization: `Bearer ${getToken()}`
             }
         })
-        console.log('team show:', res.data)
         return res.data;
     } catch (error) {
         console.log(error)

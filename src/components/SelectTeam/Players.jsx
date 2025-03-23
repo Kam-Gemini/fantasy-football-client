@@ -5,11 +5,10 @@ import Sorting from './Sorting'
 import Spinner from '../Spinner/Spinner'
 import styles from './SelectTeam.module.css'
 
-const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, setPickedPlayers, sortBy, setSortBy }) => {
+const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, sortBy, setSortBy }) => {
 
     const handlePlayerClick = (player) => {
         handleAddPlayer(player)
-        setPickedPlayers([...pickedPlayers, player.id])
     }
 
     return (
@@ -23,7 +22,7 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
                     displayedPlayers.map(player => (
                         <button 
                             key={player.id} 
-                            onClick={() => handleAddPlayer(player)} 
+                            onClick={() => handlePlayerClick(player)} 
                             className={styles.playerButton}
                             disabled={pickedPlayers.includes(player.id)}
                         >
