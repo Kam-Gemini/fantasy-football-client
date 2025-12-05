@@ -5,6 +5,7 @@ import { teamIndex } from '../../services/teamService'
 import { setToken } from '../../utils/auth'
 import { getUserFromToken } from '../../utils/auth'
 import { UserContext } from '../../contexts/UserContext'
+import { Link } from 'react-router-dom'
 
 // Styles
 import styles from './Signin.module.css'
@@ -63,46 +64,49 @@ export default function Signin() {
 
     return (
         <section className={styles.container}>
-            <section className={styles.image}></section>
-            <h1>Sign in</h1>
-            <form onSubmit={handleSubmit}>
-                {/* Username */}
-                <div className="form-control">
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter your username"
-                        required
-                        onChange={handleChange}
-                    />
+            <div className={styles.signinform}>
+                <h1>Sign in</h1>
+                <form onSubmit={handleSubmit}>
+                    {/* Username */}
+                    <div className="form-control">
+                        <label htmlFor="username">Username</label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            placeholder="Enter your username"
+                            required
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div className="form-control">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                            onChange={handleChange}
+                        />
+                        {errors.detail && <p className='error-block'>{errors.detail}</p>}
+
+                    </div>
+
+                    <button
+                        disabled={!formData.password}
+                        type="submit"
+                        className={styles.button}
+                    >
+                        SUBMIT
+                    </button>
+                </form>
+                <div className={styles.signupLink}>
+                    <Link to="/signup">Don't have an account yet? Sign up here!</Link>
                 </div>
-
-                {/* Password */}
-                <div className="form-control">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                        onChange={handleChange}
-                    />
-                    {errors.detail && <p className='error-block'>{errors.detail}</p>}
-
-                </div>
-
-                <button
-                    disabled={!formData.password}
-                    type="submit"
-                    className="button"
-                >
-                    Submit
-                </button>
-            </form>
-            <button onClick={() => navigate('/signup')} className={styles.button}>Don't have an account yet? Sign up here!</button>
+            </div>
         </section>
     )
 }

@@ -10,6 +10,7 @@ import SavedTeam from './SavedTeam'
 import DeleteTeam from './DeleteTeam'
 
 import styles from './SelectTeam.module.css'
+import Leagues from '../Leagues/Leagues'
 
 export default function SelectTeam ({ existingTeam }) {
 
@@ -20,9 +21,11 @@ export default function SelectTeam ({ existingTeam }) {
     const [filterBy, setFilterBy] = useState('All')
     const [sortBy, setSortBy] = useState('') // State for sorting criteria
     const [isLoading, setIsLoading] = useState(true)
-    const [isSaved, setIsSaved] = useState(false)
-    const [savedTeam, setSavedTeam] = useState(null)
+    const [isSaved, setIsSaved] = useState(true)
+    const [showLeagues, setShowLeagues] = useState(false)
+    const [savedTeam, setSavedTeam] = useState(true)
     const [totalCost, setTotalCost] = useState(0)
+    const [totalPoints, setTotalPoints] = useState(0)
     const [costExceeded, setCostExceeded] = useState(false)
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
@@ -127,6 +130,8 @@ export default function SelectTeam ({ existingTeam }) {
 
     useEffect(() => {
         const total = calculateTotalCost()
+        const points = calculateTotalPoints()
+        setTotalPoints(points)
         setTotalCost(total)
         setCostExceeded(total > 100)
     }, [teamData, players])
@@ -178,6 +183,10 @@ export default function SelectTeam ({ existingTeam }) {
         })
     }
 
+    const handleEdit = () => {
+        setIsSaved(false)
+    }
+
     const handleSave = async (e) => {
         e.preventDefault()
         try {
@@ -224,6 +233,27 @@ export default function SelectTeam ({ existingTeam }) {
         return totalCost
     }
 
+    const calculateTotalPoints = () => {
+        const playerIds = [
+            teamData.goalkeeper,
+            ...teamData.defenders,
+            ...teamData.midfielders,
+            ...teamData.forwards
+        ].filter(id => id !== null)
+
+        const totalPoints = playerIds.reduce((total, id) => {
+            const player = players.find(player => player.id === id)
+            return total + (player ? parseFloat(player.points) : 0)
+        }, 0)
+
+        return totalPoints
+    }
+
+    const league = () => {
+        setShowLeagues(true)
+        navigate('/leagues')
+    }
+
     return (
         <>
             <section className={styles.header}>
@@ -237,7 +267,11 @@ export default function SelectTeam ({ existingTeam }) {
                     {costExceeded && <p className={styles.error}>You cannot spend more than 100m</p>}
                 </div>
                 <div className={styles.signOut}>
-                    <button onClick={signOut}>Sign out</button>
+                    <div className={styles.navLinks}>
+                        <a href="#" onClick={league}>Leagues</a>
+                        <a href="#" onClick={handleEdit}>Transfers</a>
+                        <a href="#" onClick={signOut}>Sign out</a>
+                    </div>
                 </div>
             </section>
             <section className={styles.mainBody}>
@@ -248,15 +282,13 @@ export default function SelectTeam ({ existingTeam }) {
                     handleSave={handleSave} 
                     handleEdit={() => setIsSaved(false)} // Pass handleEdit function
                     handleDelete={handleDelete} // Pass handleDelete function
-                    currentTeam={currentTeam} // Pass currentTeam to Pitch component
-                    setTeamData={setTeamData} // Pass setTeamData to Pitch component
                     isSaved={isSaved} // Pass isSaved state to Pitch component
                     pickedPlayers={pickedPlayers}
                     costExceeded={costExceeded}
                 />
-                {isSaved || existingTeam ? (
-                    <SavedTeam savedTeam={savedTeam} />
-                ) : (
+                {isSaved || existingTeam && !showLeagues ? (
+                    <SavedTeam savedTeam={savedTeam} totalCost={totalCost} totalPoints={totalPoints}/>
+                ) : !showLeagues ? (
                     <Players 
                         filterBy={filterBy} 
                         setFilterBy={setFilterBy}
@@ -267,7 +299,8 @@ export default function SelectTeam ({ existingTeam }) {
                         displayedPlayers={displayedPlayers} 
                         handleAddPlayer={handleAddPlayer}
                         pickedPlayers={pickedPlayers}
-                    />
+                    /> 
+                    ) : (<Leagues />
                 )}
             </section>
             {/* Delete Confirmation Modal */}

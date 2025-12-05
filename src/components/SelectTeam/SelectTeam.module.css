@@ -19,7 +19,7 @@
 .textContainer {
     display: flex;
     flex-direction: column;
-    color: white;
+    color: var(--text-primary);
 }
 
 .textContainer h1 {
@@ -54,10 +54,11 @@
 
 .pitch {
     width: 1000px;
-    height: 1200px;
+    height: 1100px;
     background-color: var(--brand);
-    position: relative;
-    /* Ensure absolute positioning of child elements works correctly */
+    position: relative; /* Ensure absolute positioning of child elements works correctly */
+    border: 5px solid var(--border);
+    border-radius: 20px;
 }
 
 .pitchGoalkeeper,
@@ -66,7 +67,7 @@
 .pitchForwards {
     position: absolute;
     text-align: center;
-    color: white;
+    color: var(--text-primary);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -226,7 +227,8 @@
 }
 
 .saveButton {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
     font-size: 18px;
     color: white;
     background-color: #faa307;
@@ -249,37 +251,11 @@
     cursor: not-allowed;
 }
 
-.signOut {
-    margin-left: auto;
-}
-.signOut Button {
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 18px;
-    color: white;
-    background-color: #faa307;
-    border: none;
-    margin: 0.7rem;
-    padding: 0.3rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 8px;
-    width: 100px;
-    margin-left: 10px;
-}
-
-.signOut Button:hover {
-    background-color: #f48c06;
-}
-
-.signOut Button:disabled {
-    background-color: #ffba08;
-    cursor: not-allowed;
-}
-
 .deleteButton {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
     font-size: 18px;
-    color: white;
+    color: var(--text-primary);
     background-color: #e01e37;
     border: none;
     margin: 0.7rem;
@@ -304,7 +280,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    color: white;
+    color: var(--text-primary);
 }
 
 .savedTeam img {
@@ -312,13 +288,13 @@
 }
 
 .customModalHeader {
-    background-color: #495057 !important;
-    color: white !important;
+    background-color: var(--background-primary)!important;
+    color: var(--text-primary) !important;
 }
 
 .customModalBody {
-    background-color: #495057 !important;
-    color: white !important;
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
     padding: 20px !important;
 }
 
@@ -338,4 +314,29 @@
 .filters {
     display: flex;
     gap: 30px;
+}
+
+.modal.show .modal-dialog {
+    background: transparent !important;
+}
+
+.modal.fade .modal-dialog {
+    background: transparent !important;
+}
+
+.signOut {
+    margin-left: auto;
+    font-family: Ariel, sans-serif;
+}
+
+.navLinks {
+    display: flex;
+    gap: 20px;
+}
+
+.navLinks a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 800;
 }

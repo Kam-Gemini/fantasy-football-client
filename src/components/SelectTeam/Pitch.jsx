@@ -2,7 +2,7 @@ import PlayerCard from './PlayerCard'
 import VacantPlayer from './VacantPlayer'
 import styles from './SelectTeam.module.css'
 
-const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, currentTeam, setTeamData, isSaved, costExceeded }) => {
+const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, isSaved, costExceeded }) => {
 
     const getPlayerById = (id) => {
         const player = players.find(player => player.id === id)
