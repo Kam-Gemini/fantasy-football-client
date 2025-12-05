@@ -335,7 +335,7 @@
 }
 
 .navLinks a {
-    text-decoration: none;
+    text-decoration: none !important;
     color: var(--text-primary);
     font-size: 1.25rem;
     font-weight: 800;

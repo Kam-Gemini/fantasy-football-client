@@ -18,7 +18,7 @@
 
 .crestContainer button {
     background: none;
-    border: --border;
+    border: 1px solid white;
     padding: 20px;
     cursor: pointer;
     border-radius: 10px;
@@ -37,5 +37,5 @@
 }
 
 .heading {
-    color: #f4d35e;
+    color: var(--text-primary);
 }

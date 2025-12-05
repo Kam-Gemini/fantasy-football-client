@@ -55,7 +55,7 @@ export default function FavouriteTeam() {
                         <img src="/assets/Fulham.png" alt="Fulham" />
                     </button>
                     <button value="Ipswich Town" onClick={handleTeamSelect}>
-                        <img src="/assets/Ipswich.png" alt="Ipswich Town" />
+                        <img src="/assets/IpswichTown.png" alt="Ipswich Town" />
                     </button>
                     <button value="Leicester" onClick={handleTeamSelect}>
                         <img src="/assets/Leicester.png" alt="Leicester" />

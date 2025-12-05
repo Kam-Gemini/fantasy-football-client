@@ -41,21 +41,24 @@ export default function FantasyTeamName() {
 
     return (
         <section className={styles.container}>
-            <h1>Fantasy Team Name</h1>
-            <form onSubmit={handleSubmit}>
-                {/* Username */}
-                <div className="form-control">
-                    <input
-                        type="text"
-                        name="team_name"
-                        id="team_name"
-                        placeholder="Enter your team name..."
-                        required
-                        onChange={handleChange}
-                    />
-                </div>
-                <button onClick={() => navigate('/selectteam')} disabled={!teamData.team_name} type="submit" className={styles.button}>Submit</button>
-            </form>
+            <div className={styles.signinform}>
+                <h1>Fantasy Team Name</h1>
+                <form onSubmit={handleSubmit}>
+                    {/* Username */}
+                    <div className="form-control">
+                        <input
+                            type="text"
+                            name="team_name"
+                            id="team_name"
+                            placeholder="Enter your team name..."
+                            required
+                            onChange={handleChange}
+                            style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 'bold' }}
+                        />
+                    </div>
+                    <button onClick={() => navigate('/selectteam')} disabled={!teamData.team_name} type="submit" className={styles.button}>SUBMIT</button>
+                </form>
+            </div>
         </section>
     )
 }

@@ -270,6 +270,7 @@ export default function SelectTeam ({ existingTeam }) {
                     <h1>Fantasy Football</h1>
                     <p>Create your own team...</p>
                     <h2>Total Cost: {totalCost}m</h2>
+                    <h2>Total Points: {totalPoints}</h2>
                     {costExceeded && <p className={styles.error}>You cannot spend more than 100m</p>}
                 </div>
                 <div className={styles.signOut}>
