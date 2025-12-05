@@ -1,7 +1,7 @@
 import axios from "axios"
 import { getToken } from "../utils/auth.js"
 
-const BASE_URL = import.meta.env.VITE_API_URL + '/leagues/'
+const BASE_URL = import.meta.env.VITE_API_URL + '/leagues'
 
 export const leagueIndex = async () => {
     try {

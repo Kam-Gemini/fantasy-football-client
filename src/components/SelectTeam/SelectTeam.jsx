@@ -8,9 +8,9 @@ import Pitch from './Pitch'
 import Players from './Players'
 import SavedTeam from './SavedTeam'
 import DeleteTeam from './DeleteTeam'
+import Leagues from '../Leagues/Leagues'
 
 import styles from './SelectTeam.module.css'
-import Leagues from '../Leagues/Leagues'
 
 export default function SelectTeam ({ existingTeam }) {
 
@@ -185,6 +185,7 @@ export default function SelectTeam ({ existingTeam }) {
 
     const handleEdit = () => {
         setIsSaved(false)
+        setShowLeagues(false)
     }
 
     const handleSave = async (e) => {
@@ -251,7 +252,12 @@ export default function SelectTeam ({ existingTeam }) {
 
     const league = () => {
         setShowLeagues(true)
-        navigate('/leagues')
+        setIsSaved(true)
+    }
+
+    const home = () => {
+        setIsSaved(true)
+        setShowLeagues(false)
     }
 
     return (
@@ -268,8 +274,9 @@ export default function SelectTeam ({ existingTeam }) {
                 </div>
                 <div className={styles.signOut}>
                     <div className={styles.navLinks}>
-                        <a href="#" onClick={league}>Leagues</a>
+                        <a href="#" onClick={home}>My Team</a>
                         <a href="#" onClick={handleEdit}>Transfers</a>
+                        <a href="#" onClick={league}>Leagues</a>
                         <a href="#" onClick={signOut}>Sign out</a>
                     </div>
                 </div>
@@ -286,9 +293,11 @@ export default function SelectTeam ({ existingTeam }) {
                     pickedPlayers={pickedPlayers}
                     costExceeded={costExceeded}
                 />
-                {isSaved || existingTeam && !showLeagues ? (
+                {showLeagues ? (
+                    <Leagues />
+                ) : isSaved || existingTeam && !showLeagues ? (
                     <SavedTeam savedTeam={savedTeam} totalCost={totalCost} totalPoints={totalPoints}/>
-                ) : !showLeagues ? (
+                ) : (
                     <Players 
                         filterBy={filterBy} 
                         setFilterBy={setFilterBy}
@@ -300,7 +309,6 @@ export default function SelectTeam ({ existingTeam }) {
                         handleAddPlayer={handleAddPlayer}
                         pickedPlayers={pickedPlayers}
                     /> 
-                    ) : (<Leagues />
                 )}
             </section>
             {/* Delete Confirmation Modal */}

@@ -71,11 +71,11 @@ Having established the full scope of the project, I went about creating wirefram
 
 <img src="public/assets/Select-Players.png" alt="Wireframes" width="800"/><br />
 
-[Trello Board](https://trello.com/b/qLbGLI4H/sticky-popcorn-app)
+[Trello Board](https://trello.com/b/xcIexaB4/fantasy-football)
 
-[Entity-Relationship Diagram](https://dbdiagram.io/d/StickyPopcorn-67a5d3a3263d6cf9a05e3be6)
+[Entity-Relationship Diagram](https://dbdiagram.io/d/Fantasy-Football-67be534f263d6cf9a074b027)
 
-[Router Table](https://docs.google.com/spreadsheets/d/1dBa-vcvxqSvyo68SDoe2hoy5MUcR_3tIvn12t-FFFl8/edit?gid=0#gid=0)
+[Router Table](https://docs.google.com/spreadsheets/d/1GnKQcfSqmlHT_jpZLO9gLtrAquTCYDcRGta8swPyaMA/edit?gid=0#gid=0)
 
 ## **User Story**
 
