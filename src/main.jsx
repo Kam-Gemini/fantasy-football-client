@@ -10,9 +10,9 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
     <NavHistoryProvider>
-    <UserProvider>
+      <UserProvider>
         <App />
-    </UserProvider>
+      </UserProvider>
     </NavHistoryProvider>
     </BrowserRouter>
   </StrictMode>,

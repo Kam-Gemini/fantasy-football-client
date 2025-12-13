@@ -5,6 +5,7 @@ import Signup from './components/Signup/Signup'
 import FavouriteTeam from './components/FavouriteTeam/FavouriteTeam'
 import TeamName from './components/FantasyTeamName/TeamName'
 import SelectTeam from './components/SelectTeam/SelectTeam'
+import LeagueName from './components/Leagues/LeagueName'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/favouriteteam" element={<FavouriteTeam/>} />
         <Route path="/fantasyteamname" element={<TeamName/>} />
         <Route path="/selectteam" element={<SelectTeam/>} />
+        <Route path="/leaguename" element={<LeagueName/>} />
       </Routes>
     </>   
   )

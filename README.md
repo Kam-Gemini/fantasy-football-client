@@ -59,7 +59,7 @@ Dev Tools
 
 ## **Attribution**
 
-https://fantasy.premierleague.com/
+<a href="https://fantasy.premierleague.com/" target="_blank"></a>
 
 ## **Planning**
 
@@ -71,11 +71,11 @@ Having established the full scope of the project, I went about creating wirefram
 
 <img src="public/assets/Select-Players.png" alt="Wireframes" width="800"/><br />
 
-[Trello Board](https://trello.com/b/xcIexaB4/fantasy-football)
+<a href="https://trello.com/b/xcIexaB4/fantasy-football" target="_blank"><strong>Trell Board</strong></a>
 
-[Entity-Relationship Diagram](https://dbdiagram.io/d/Fantasy-Football-67be534f263d6cf9a074b027)
+<a href="https://dbdiagram.io/d/Fantasy-Football-67be534f263d6cf9a074b027" target="_blank"><strong>Entity-Relationship Diagram</strong></a>
 
-[Router Table](https://docs.google.com/spreadsheets/d/1GnKQcfSqmlHT_jpZLO9gLtrAquTCYDcRGta8swPyaMA/edit?gid=0#gid=0)
+<a href="https://docs.google.com/spreadsheets/d/1GnKQcfSqmlHT_jpZLO9gLtrAquTCYDcRGta8swPyaMA/edit?gid=0#gid=0" target="_blank"><strong>Router Table</strong></a>
 
 ## **User Story**
 
@@ -93,7 +93,7 @@ Having established the full scope of the project, I went about creating wirefram
 
 When it came to building the app my first thought and consideration was how I would gather the players data. In order for the game to work in any meaningful way I would need hundreds of player profiles, ideally the players from every premier league club. 
 
-After doing some research, I came across a technique known as Web Scraping. Scraping is where you run a script targeting a website to extract the web page’s content. The HTML content is parsed using a library or tool, and the data is then extracted to the desired format –in this case JSON. I managed to find a script that I was able to adapt to extract the desired player information for each player at every club from the [https://fantasy.premierleague.com/](https://fantasy.premierleague.com/) website. For the script to work I had to install Selenium WebDriver. I had to run the script for each premier league club (20 in total) and added the data to my seed file. I added some fields that would not have been on the web page and were specific to my app, ensuring each player object matched my model. By the end of the process I had player profiles for 470 players.
+After doing some research, I came across a technique known as Web Scraping. Scraping is where you run a script targeting a website to extract the web page’s content. The HTML content is parsed using a library or tool, and the data is then extracted to the desired format –in this case JSON. I managed to find a script that I was able to adapt to extract the desired player information for each player at every club from the <a href="https://fantasy.premierleague.com" target="_blank">https://fantasy.premierleague.com</a> website. For the script to work I had to install Selenium WebDriver. I had to run the script for each premier league club (20 in total) and added the data to my seed file. I added some fields that would not have been on the web page and were specific to my app, ensuring each player object matched my model. By the end of the process I had player profiles for 470 players.
 
 ## **Web Scraping**
 

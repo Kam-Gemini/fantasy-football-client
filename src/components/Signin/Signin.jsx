@@ -37,7 +37,6 @@ export default function Signin() {
             .catch(err => console.log(err))
     }, [])
 
-    
 
     //console.log(formData)
     // Events
@@ -48,7 +47,6 @@ export default function Signin() {
             setToken(data.token)
             setUser(getUserFromToken())
             const existingTeam = allTeams.find(team => team.user === user.id)
-            console.log(existingTeam)
             handleNavigate(existingTeam)
         } catch (error) {
             setErrors(error.response.data)

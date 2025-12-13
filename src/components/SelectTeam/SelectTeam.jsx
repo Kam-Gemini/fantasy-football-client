@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { removeToken } from '../../utils/auth'
 import { teamShow, teamIndex, teamUpdate, teamDelete } from '../../services/teamService'
 import { playerIndex } from '../../services/playerService'
+import { leagueIndex } from '../../services/leagueService'
 import Pitch from './Pitch'
 import Players from './Players'
 import SavedTeam from './SavedTeam'
@@ -31,6 +32,8 @@ export default function SelectTeam ({ existingTeam }) {
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
+    const [allLeagues, setAllLeagues] = useState([])
+
     const navigate = useNavigate()
 
     const signOut = () => {
@@ -250,6 +253,15 @@ export default function SelectTeam ({ existingTeam }) {
         return totalPoints
     }
 
+    useEffect(() => {
+        leagueIndex()
+            .then(data => {
+                setAllLeagues(data)
+            })
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
+    }, [])
+
     const league = () => {
         setShowLeagues(true)
         setIsSaved(true)
@@ -295,7 +307,7 @@ export default function SelectTeam ({ existingTeam }) {
                     costExceeded={costExceeded}
                 />
                 {showLeagues ? (
-                    <Leagues />
+                    <Leagues allLeagues={allLeagues}/>
                 ) : isSaved || existingTeam && !showLeagues ? (
                     <SavedTeam savedTeam={savedTeam} totalCost={totalCost} totalPoints={totalPoints}/>
                 ) : (
