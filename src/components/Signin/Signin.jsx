@@ -98,7 +98,7 @@ export default function Signin() {
                         type="submit"
                         className={styles.button}
                     >
-                        SUBMIT
+                        Submit
                     </button>
                 </form>
                 <div className={styles.signupLink}>

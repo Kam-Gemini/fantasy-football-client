@@ -4,12 +4,14 @@
   --text-primary: white;
   --text-secondary: #cecece;
   --background-primary: #030366;
-  --background-secondary: linear-gradient(90deg,rgba(2, 0, 36, 1) 46%, rgba(9, 9, 121, 1) 70%, rgba(0, 212, 255, 1) 100%);
+  --background-secondary: linear-gradient(90deg,rgba(2, 0, 36, 1) 11%, rgba(9, 9, 121, 1) 43%, rgba(255, 0, 230, 0.7) 100%);
   --background-tertiary: #001427;
   --border: white;
-  --brand: #088708;
-  --button-background: #020024;
-  --brand-hover: #020024;
+  --brand: #029e02;
+  --button-background: #080875;
+  --button-secondary: #37003c;
+  --button-hover: #9d00ab;
+  --brand-hover: #1010B0;
   --brand-disabled: #090979;
   --error: #E74C3C;
 }

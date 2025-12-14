@@ -114,7 +114,7 @@ export default function Signup() {
                     }
                     </div>
 
-                    <button disabled={formData.password === '' || formData.password !== formData.password_confirmation} type="submit" className={styles.button}>SUBMIT</button>
+                    <button disabled={formData.password === '' || formData.password !== formData.password_confirmation} type="submit" className={styles.button}>Submit</button>
                 </form>
             </div>
         </section>

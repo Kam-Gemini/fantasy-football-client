@@ -22,12 +22,12 @@ const JoinLeagues = ({league}) => {
     }
 
     return (
-        <section className={styles.leagueTable}>
+        <section className={styles.joinLeagueTable}>
             <div className={styles.leagues}>
-                <div className={styles.leagueTeam}>
+                <div className={styles.leagueJoin}>
                     <div className={styles.teamPosition}><strong>{league.league_name}</strong></div>
                     <button onClick={handleJoinLeague} className={styles.joinButton}>
-                        Join
+                        +
                     </button>
                 </div>
             </div>

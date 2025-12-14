@@ -50,11 +50,11 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
             <div className={styles.saveButtonContainer}>
                 {isSaved ? (
                     <>
-                        <button onClick={handleEdit} className={styles.saveButton}>UPDATE</button>
-                        <button onClick={handleDelete} className={styles.deleteButton}>DELETE</button>
+                        <button onClick={handleEdit} className={styles.saveButton}>Update</button>
+                        <button onClick={handleDelete} className={styles.deleteButton}>Delete</button>
                     </>
                 ) : (
-                    <button onClick={handleSave} className={styles.saveButton} disabled={costExceeded}>SAVE</button>
+                    <button onClick={handleSave} className={styles.saveButton} disabled={costExceeded}>Save</button>
                 )}
             </div>
         </div>

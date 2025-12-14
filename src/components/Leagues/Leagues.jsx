@@ -10,10 +10,13 @@ const Leagues = ({allLeagues, existingTeam}) => {
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
     const joinLeagues = allLeagues.filter(league => (league.teams.every(team => team.user !== user.id)))
-    console.log('Leagues available to join:', joinLeagues.length)
+    const [showLeagues, setShowLeagues] = useState(false)
     const [selectedLeagueId, setSelectedLeagueId] = useState(null)
     const handleLeagueClick = (leagueId) => {
         setSelectedLeagueId(selectedLeagueId === leagueId ? null : leagueId)
+    }
+    const handleJoinLeagueClick = () => {
+        setShowLeagues(!showLeagues)
     }
 
     return (
@@ -30,12 +33,12 @@ const Leagues = ({allLeagues, existingTeam}) => {
                 }
             </div>
             {joinLeagues.length > 0 ?
-            <button className={styles.joinLeagueButton} onClick={() => {}}><h3>Join a League</h3></button> : null}
-                {joinLeagues.length > 0 ? joinLeagues.map(league => (
-                    <JoinLeagues key={league.id} league={league} />)) : <p>No leagues available to join</p>}
-            <br />
-            <button onClick={() => navigate('/leaguename')} className={styles.createButton}>Create new league</button>
-            
+            <button className={styles.createButton} onClick={() => handleJoinLeagueClick()}>Join a League</button> : null}
+                {showLeagues && (joinLeagues.length > 0 ? joinLeagues.map(league => (
+                    <JoinLeagues key={league.id} league={league} />)) : <p>No leagues available to join</p>)}
+            <div>
+                <button onClick={() => navigate('/leaguename')} className={styles.createButton}>Create a league</button>
+            </div>
         </section>
     )
 }
