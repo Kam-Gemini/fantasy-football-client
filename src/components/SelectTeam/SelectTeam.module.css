@@ -366,3 +366,22 @@
     align-items: center;
     justify-content: center;
 }
+
+.playerInfoModal {
+    display: flex;
+    gap: 40px;
+}
+
+.playerInfoModal img {
+    width: 250px;
+    height: auto;
+}
+
+.infoCustomModalHeader {
+    background-color: rgba(150, 150, 150, 0.75) !important;
+}
+
+.infoCustomModalBody {
+    background-color: rgba(150, 150, 150, 0.25) !important;
+    opacity: 1 !important;
+}

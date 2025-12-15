@@ -6,6 +6,7 @@ import styles from './Leagues.module.css'
 const LeagueTable = ({league}) => {
     const { user } = useContext(UserContext)
     const sortedTeams = [...league.teams].sort((a, b) => b.total_points - a.total_points)
+    
     return (
         <section className={styles.leagueTable}>
             <div className={styles.leagues}>

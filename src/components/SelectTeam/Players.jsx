@@ -20,14 +20,14 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
             <div className={styles.playersContainer}>
                 { isLoading ? <Spinner /> : 
                     displayedPlayers.map(player => (
-                        <button 
+                        <div 
                             key={player.id} 
                             onClick={() => handlePlayerClick(player)} 
                             className={styles.playerButton}
                             disabled={pickedPlayers.includes(player.id)}
                         >
                             <PlayerCard player={player} />
-                        </button>
+                        </div>
                     ))
                 }
             </div>
