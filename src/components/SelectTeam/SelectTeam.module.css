@@ -286,8 +286,17 @@
 .savedTeam {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     color: var(--text-primary);
+}
+.savedTeam img {
+    width: 300px;
+}
+.savedTeam h1 {
+    font-size: 50px;
+}
+
+.savedTeam h2 {
+    font-size: 40px;
 }
 
 .savedTeam img {

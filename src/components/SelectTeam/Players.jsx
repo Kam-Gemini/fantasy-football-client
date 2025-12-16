@@ -5,9 +5,9 @@ import Spinner from '../Spinner/Spinner'
 import styles from './SelectTeam.module.css'
 
 const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlayers, handleAddPlayer, pickedPlayers, sortBy, setSortBy }) => {
-
     const handlePlayerClick = (player) => {
-        handleAddPlayer(player)
+        // Prevent adding a player that's already picked
+        (pickedPlayers && pickedPlayers.includes(player.id)) ? null : handleAddPlayer(player)
     }
 
     return (
@@ -19,14 +19,14 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
             <div className={styles.playersContainer}>
                 { isLoading ? <Spinner /> : 
                     displayedPlayers.map(player => (
-                        <button 
+                        <div
+                            role="button" 
                             key={player.id} 
                             onClick={() => handlePlayerClick(player)} 
                             className={styles.playerButton}
-                            disabled={pickedPlayers.includes(player.id)}
                         >
                             <PlayerCard player={player} />
-                        </button>
+                        </div>
                     ))
                 }
             </div>

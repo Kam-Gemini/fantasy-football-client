@@ -33,6 +33,7 @@ export default function SelectTeam ({ existingTeam }) {
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
+    const [userTeamName, setUserTeamName] = useState('')
     const [showDeleteModal, setShowDeleteModal] = useState(false) // State for delete modal
     const [allLeagues, setAllLeagues] = useState([])
 
@@ -116,6 +117,7 @@ export default function SelectTeam ({ existingTeam }) {
             const team = allTeams.find(team => team.user === user.id)
             if (team) {
                 setCurrentTeam(team)
+                setUserTeamName(team.team_name)
                 teamShow(team.id)
                     .then(data => {
                         setTeamData(initializeTeamData(data))
@@ -315,6 +317,7 @@ export default function SelectTeam ({ existingTeam }) {
                 <div className={styles.textContainer}>
                     <h1>Fantasy Football</h1>
                     <p>Create your own team...</p>
+                    <p>You have a transfer budget of 100m and cannot select more than 3 players from any club.</p>
                     <h2>Total Cost: {totalCost}m</h2>
                     <h2>Total Points: {totalPoints}</h2>
                     {costExceeded && <p className={styles.error}>You cannot spend more than 100m</p>}
@@ -344,7 +347,7 @@ export default function SelectTeam ({ existingTeam }) {
                 {showLeagues ? (
                     <Leagues allLeagues={allLeagues}/>
                 ) : isSaved || existingTeam && !showLeagues ? (
-                    <SavedTeam savedTeam={savedTeam} totalCost={totalCost} totalPoints={totalPoints}/>
+                    <SavedTeam userTeamName={userTeamName} totalCost={totalCost} totalPoints={totalPoints}/>
                 ) : (
                     <Players 
                         filterBy={filterBy} 
