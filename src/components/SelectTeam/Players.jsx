@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import PlayerCard from './PlayerCard'
 import Filters from './Filters'
 import Sorting from './Sorting'
@@ -20,14 +19,14 @@ const Players = ({ filterBy, setFilterBy, listAllClubs, isLoading, displayedPlay
             <div className={styles.playersContainer}>
                 { isLoading ? <Spinner /> : 
                     displayedPlayers.map(player => (
-                        <div 
+                        <button 
                             key={player.id} 
                             onClick={() => handlePlayerClick(player)} 
                             className={styles.playerButton}
                             disabled={pickedPlayers.includes(player.id)}
                         >
                             <PlayerCard player={player} />
-                        </div>
+                        </button>
                     ))
                 }
             </div>

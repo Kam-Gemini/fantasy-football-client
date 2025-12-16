@@ -3,7 +3,7 @@ import VacantPlayer from './VacantPlayer'
 import { useState } from 'react'
 import styles from './SelectTeam.module.css'
 
-const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, isSaved, costExceeded }) => {
+const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, handleDelete, isSaved, costExceeded, playerLimitExceeded }) => {
     const [openInfoPlayerId, setOpenInfoPlayerId] = useState(null)
 
     const getPlayerById = (id) => {
@@ -56,7 +56,7 @@ const Pitch = ({ teamData, players, handleRemovePlayer, handleSave, handleEdit, 
                         <button onClick={handleDelete} className={styles.deleteButton}>Delete</button>
                     </>
                 ) : (
-                    <button onClick={handleSave} className={styles.saveButton} disabled={costExceeded}>Save</button>
+                    <button onClick={handleSave} className={styles.saveButton} disabled={costExceeded || playerLimitExceeded}>Save</button>
                 )}
             </div>
         </div>

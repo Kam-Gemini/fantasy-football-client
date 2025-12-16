@@ -28,6 +28,8 @@ export default function SelectTeam ({ existingTeam }) {
     const [totalCost, setTotalCost] = useState(0)
     const [totalPoints, setTotalPoints] = useState(0)
     const [costExceeded, setCostExceeded] = useState(false)
+    const [playerLimitExceeded, setPlayerLimitExceeded] = useState(false)
+    const [clubPlayersExceeded, setClubPlayersExceeded] = useState([])
     const listAllClubs = [...new Set(players.map(player => player.club))]
     const [allTeams, setAllTeams] = useState([])
     const [currentTeam, setCurrentTeam] = useState(null)
@@ -132,6 +134,9 @@ export default function SelectTeam ({ existingTeam }) {
     }, [existingTeam])
 
     useEffect(() => {
+        const playersLimit = fourOrMorePlayers()
+        setPlayerLimitExceeded(playersLimit.length > 0)
+        setClubPlayersExceeded(playersLimit)
         const total = calculateTotalCost()
         const points = calculateTotalPoints()
         setTotalPoints(points)
@@ -253,6 +258,35 @@ export default function SelectTeam ({ existingTeam }) {
         return totalPoints
     }
 
+    // Helper to find a player object by id from the `players` state
+    const getPlayerById = (id) => players.find(player => player && (player.id === id))
+
+    const fourOrMorePlayers = () => {
+        const playerIds = [
+            teamData.goalkeeper,
+            ...teamData.defenders,
+            ...teamData.midfielders,
+            ...teamData.forwards
+        ].filter(id => id !== null)
+
+        const clubsArray = playerIds.map(id => {
+            const player = getPlayerById(id)
+            return player.club
+        })
+        const clubCount = {}
+        const clubsWithFourOrMore = []
+        
+        clubsArray.forEach(club => {
+            clubCount[club] = (clubCount[club] || 0) + 1;
+            
+            if (clubCount[club] >= 4) {
+                clubsWithFourOrMore.push(club)
+            }
+        })
+        return clubsWithFourOrMore
+
+    }
+
     useEffect(() => {
         leagueIndex()
             .then(data => {
@@ -284,6 +318,7 @@ export default function SelectTeam ({ existingTeam }) {
                     <h2>Total Cost: {totalCost}m</h2>
                     <h2>Total Points: {totalPoints}</h2>
                     {costExceeded && <p className={styles.error}>You cannot spend more than 100m</p>}
+                    {playerLimitExceeded && <p className={styles.error}>You have selected more than 3 players from {clubPlayersExceeded[0]} </p>}
                 </div>
                 <div className={styles.signOut}>
                     <div className={styles.navLinks}>
@@ -303,8 +338,8 @@ export default function SelectTeam ({ existingTeam }) {
                     handleEdit={() => setIsSaved(false)} // Pass handleEdit function
                     handleDelete={handleDelete} // Pass handleDelete function
                     isSaved={isSaved} // Pass isSaved state to Pitch component
-                    pickedPlayers={pickedPlayers}
                     costExceeded={costExceeded}
+                    playerLimitExceeded={playerLimitExceeded}
                 />
                 {showLeagues ? (
                     <Leagues allLeagues={allLeagues}/>

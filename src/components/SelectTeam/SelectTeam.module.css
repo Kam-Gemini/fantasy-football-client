@@ -255,7 +255,7 @@
 }
 
 .saveButton:disabled {
-    background-color: var(--button-secondary);
+    opacity: 0.65;
     cursor: not-allowed;
 }
 
