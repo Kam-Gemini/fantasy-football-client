@@ -312,7 +312,7 @@ export default function SelectTeam ({ existingTeam }) {
         <>
             <section className={styles.header}>
                 <div className={styles.imageContainer}>
-                    <img src="/assets/MainGraphic.jpeg" alt="player kicking ball"/>
+                    <img src="/assets/player-graphic.png" alt="player kicking ball"/>
                 </div>
                 <div className={styles.textContainer}>
                     <h1>Fantasy Football</h1>

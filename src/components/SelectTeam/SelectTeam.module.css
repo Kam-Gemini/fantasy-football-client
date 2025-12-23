@@ -6,10 +6,10 @@
     gap: 30px;
 }
 
-.imageContainer {
+/* .imageContainer {
     border: solid 3px white;
     border-radius: 8px;
-}
+} */
 
 .imageContainer img {
     width: 300px;
@@ -24,7 +24,7 @@
 
 .textContainer h1 {
     margin: 0;
-    font-size: 4rem;
+    font-size: 4.5rem;
 }
 
 .textContainer p {
@@ -35,7 +35,7 @@
 .mainBody {
     display: flex;
     gap: 50px;
-    margin: 50px 30px;
+    margin: 30px;
 }
 
 .leftColumn {
@@ -292,7 +292,7 @@
     width: 300px;
 }
 .savedTeam h1 {
-    font-size: 50px;
+    font-size: 55px;
 }
 
 .savedTeam h2 {
