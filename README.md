@@ -11,6 +11,7 @@ I decided to build a Fantasy Football App. Fantasy football is a game where user
 https://fantasy-football-app.netlify.app/
 
 <b>username</b>: Kam
+
 <b>password</b>: Password!23
 
 <img src="public/assets/fantasy-football-site.png" alt="Fantasy Football App"/>
